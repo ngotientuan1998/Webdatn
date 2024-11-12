@@ -1,7 +1,7 @@
 import React, { useState ,useEffect} from 'react';
 import '../Homes/home.css';
 import SanPham from '../SanPham/sanPham';
-import LoaiSP from '../../LoaiSP/LoaiSP';
+import LoaiSP from '../LoaiSP/LoaiSP';
 
 const Home = () => {
   const [content, setContent] = useState('');
