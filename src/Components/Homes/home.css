@@ -1,0 +1,77 @@
+/* src/Components/Homes/Home.css */
+
+/* Thiết lập toàn bộ trang */
+    /* .home{
+        height: 50%;
+        width: 100%;
+        margin: 0;
+        font-family: Arial, sans-serif;
+    } */
+    
+  .home {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+  }
+  
+  /* Thanh công cụ bên trái */
+  .sidebar {
+    width: 30%;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: #fff;
+    padding: 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+    
+  }
+  
+  .sidebar h2 {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 30px;
+  }
+  
+  .sidebar ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sidebar ul li {
+    padding: 15px;
+    margin: 10px 0;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    cursor: pointer;
+    text-align: left;
+    border-radius: 8px;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+  
+  .sidebar ul li:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateX(5px);
+  }
+  
+  /* Nội dung bên phải */
+  .content {
+    width: 70%;
+    padding: 20px;
+    overflow-y: auto;
+  }
+  
+  #main-content {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  .user-avatar {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+  }
+  
+  .dropdown-menu {
+    display: none; /* Bạn có thể xử lý hiển thị dropdown ở đây */
+  }
+  
