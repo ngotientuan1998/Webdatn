@@ -1,7 +1,22 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import '../SanPham/sanPham.css'
+import ProductDialog from "../DialogThemSP/ThemSP";
+import { Button } from '@mui/material';
+
+
 const SanPham = () => {
     const [isOpen, setisOpen] = useState({})
+    const [openDialog, setOpenDialog] = useState(false);
+
+    // Hàm mở dialog
+    const handleOpenDialog = () => {
+        setOpenDialog(true);
+    };
+
+    // Hàm đóng dialog
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
+    };
     const togglemenu = (menu) => {
         setisOpen((prev) => ({
             ...prev,
@@ -15,6 +30,10 @@ const SanPham = () => {
             <section>
             <h3>Chào mừng bạn đến với trang sản phẩm</h3>
                 <input type="text" placeholder="Tìm kiếm" />
+                <Button variant="contained" color="primary" onClick={handleOpenDialog}>Thêm sản phẩm</Button>
+
+                {/* Hiển thị ProductDialog khi openDialog = true */}
+                 {openDialog && <ProductDialog open={openDialog} onClose={handleCloseDialog} />}
                 <p>Tùy chọn</p>
 
                 <div className="tuychon">

@@ -46,6 +46,7 @@ input {
 }
 
 button {
+  margin-top: 15px;
   cursor: pointer;
   align-self: flex-end;
   padding: 0.5rem;

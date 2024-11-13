@@ -2,6 +2,7 @@ import React, { useState ,useEffect} from 'react';
 import '../Homes/home.css';
 import SanPham from '../SanPham/sanPham';
 import LoaiSP from '../LoaiSP/LoaiSP';
+import RevenueStatistics from '../ThongKe/ThongKe';
 
 const Home = () => {
   const [content, setContent] = useState('');
@@ -18,7 +19,9 @@ const Home = () => {
         case 'ql-sanpham':
             return <SanPham/>
         case 'ql-loaisp':
-              return <LoaiSP/>    
+              return <LoaiSP/>
+        case 'thongke':
+            return <RevenueStatistics/>    
     }
   }
   const handleContentChange = (type) => {
@@ -33,6 +36,7 @@ const Home = () => {
           <li onClick={() => handleContentChange('ql-sanpham')}><i className="fas fa-laptop"></i> Quản lý sản phẩm</li>
           <li onClick={() => handleContentChange('ql-loaisp')}><i className="fas fa-tags"></i> Quản lý loại sản phẩm</li>
           <li onClick={() => handleContentChange('ql-khachhang')}><i className="fas fa-users"></i> Quản lý khách hàng</li>
+          <li onClick={() => handleContentChange('thongke')}><i className="fas fa-users"></i> Thống kê</li>
           <li onClick={() => handleContentChange('cai-dat')}><i className="fas fa-cogs"></i> Cài đặt</li>
         </ul>
       </div>
