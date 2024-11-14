@@ -20,7 +20,7 @@ const DonHangComponent = ({ token }) => {
           throw new Error('Fetch failed');
         }
         const data = await res.json()
-        console.log(data.data);
+        // console.log(data.data);
         setListDonHang(data.data)
 
       } catch (error) {

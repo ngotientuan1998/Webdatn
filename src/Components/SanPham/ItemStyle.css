@@ -69,11 +69,14 @@
   
   .button-container {
     display: flex;
-    justify-content: space-between; /* Căn đều các nút */
+    justify-content: space-around; /* Căn đều các nút */
     width: 100%; /* Chiếm toàn bộ chiều rộng */
   }
   
   .button {
+    width: 80%;
+    display: flex;
+    justify-content: center;
     padding: 10px 15px;
     border: none;
     background-color: #4CAF50;

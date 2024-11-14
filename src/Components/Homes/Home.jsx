@@ -1,44 +1,62 @@
 import React, { useState, useEffect } from 'react';
 import '../Homes/home.css';
 import SanPham from '../SanPham/sanPham';
-import LoaiSP from '../../LoaiSP/LoaiSP';
+import LoaiSP from '../LoaiSP/LoaiSP';
 import KhachHang from '../KhachHang/KhachHangComponent';
 import DonHangComponent from '../DonHang/DonHangComponent';
 import HoaDonComponent from '../HoaDon/HoaDonComponent';
+import RevenueStatistics from '../ThongKe/ThongKe';
+import ChiTietSPComponent from '../ChiTietSP/ChiTietSPComponent';
 
 const Home = () => {
   const [content, setContent] = useState('');
-  const user = localStorage.getItem('user')
-  const resUser = JSON.parse(user)
-  const token = resUser.AccessToken
+  const [idSanPham, setidSanPham] = useState('')
+  const user = localStorage.getItem('user');
+  const resUser = JSON.parse(user);
+  const token = resUser.AccessToken;
+
   useEffect(() => {
     document.body.style.cssText = `
         display: contents
-    `
+    `;
     return () => {
-      document.body.style.cssText = ``
-    }
-  }, [])
+      document.body.style.cssText = ``;
+    };
+  }, []);
+
+  // Chuyển đổi nội dung dựa trên 'content'
   const renderContent = () => {
     switch (content) {
       case 'ql-sanpham':
-        return <SanPham token={token} />
+        return <SanPham token={token} showCT = {handleProductClick}/>;
       case 'ql-loaisp':
-        return <LoaiSP />
+        return <LoaiSP />;
       case 'ql-khachhang':
-        return <KhachHang token={token} />
+        return <KhachHang token={token} />;
       case 'ql-donhang':
-        return <DonHangComponent token={token} />
-        case 'ql-hoadon':
-        return <HoaDonComponent token={token} />
+        return <DonHangComponent token={token} />;
+      case 'ql-hoadon':
+        return <HoaDonComponent token={token} />;
+      case 'thongke':
+        return <RevenueStatistics />;
+        case 'san-pham-chi-tiet':
+        return <ChiTietSPComponent token = {token} idSanPham ={ idSanPham} back = {handleContentChange} />;
+      default:
+        return <RevenueStatistics />; // Đặt Thống kê làm mặc định
     }
-  }
+  };
+  const handleProductClick = (productId) => {
+    setContent('san-pham-chi-tiet');  // Thay đổi content để hiển thị chi tiết sản phẩm
+    setidSanPham(productId)
+  };
+
+  // Hàm để thay đổi nội dung hiển thị
   const handleContentChange = (type) => {
     setContent(type);
   };
 
   return (
-    <div className='home'>
+    <div className="home">
       <div className="sidebar">
         <h2>Quản trị hệ thống</h2>
         <ul>
@@ -47,12 +65,12 @@ const Home = () => {
           <li onClick={() => handleContentChange('ql-khachhang')}><i className="fas fa-users"></i> Quản lý khách hàng</li>
           <li onClick={() => handleContentChange('ql-donhang')}><i className="fas fa-users"></i> Quản lý đơn hàng</li>
           <li onClick={() => handleContentChange('ql-hoadon')}><i className="fas fa-users"></i> Quản lý hóa đơn</li>
+          <li onClick={() => handleContentChange('thongke')}><i className="fas fa-users"></i> Thống kê</li>
           <li onClick={() => handleContentChange('cai-dat')}><i className="fas fa-cogs"></i> Cài đặt</li>
         </ul>
       </div>
 
       <div className="content">
-
         {renderContent()}
       </div>
 

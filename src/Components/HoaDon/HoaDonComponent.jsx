@@ -18,7 +18,7 @@ const HoaDonComponent = ({ token }) => {
                     throw new Error('Fetch failed');
                 }
                 const data = await res.json()
-                console.log(data.data);
+                // console.log(data.data);
                 setListHoaDon(data.data)
             } catch (error) {
                 console.log(error.message);

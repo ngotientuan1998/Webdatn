@@ -1,0 +1,78 @@
+/* Đặt chung cho toàn bộ item */
+.product-detail-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  width: 80%;
+}
+
+/* Phần chứa hình ảnh sản phẩm */
+.product-detail-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* Cột chứa ảnh sản phẩm */
+.product-images {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.product-image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Cột chứa các thông tin chi tiết sản phẩm */
+.product-details {
+  flex: 2;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.product-details p {
+  font-size: 16px;
+  color: #333;
+}
+
+.product-details strong {
+  color: #333;
+  font-weight: bold;
+}
+
+/* Nút Sửa */
+.product-edit-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.product-edit-button button {
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.product-edit-button button:hover {
+  background-color: #0056b3;
+}

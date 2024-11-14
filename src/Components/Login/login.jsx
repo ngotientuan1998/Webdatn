@@ -36,7 +36,7 @@ const Login = () => {
                 // localStorage.setItem('token',data.AccessToken),
                 localStorage.setItem('user',JSON.stringify(data))
             }
-            console.log(data);
+            // console.log(data);
             
             alert(data.message || 'Đăng nhập thành công')
             navigate('/home');

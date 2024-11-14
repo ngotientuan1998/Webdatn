@@ -14,9 +14,9 @@ function App() {
       
       <Routes>
       <Route path="/" element={<Login/>} />
-        
-    <Route path="/signin" element={<Singin/>} />
-    <Route path="/home" element={<Home/>} />
+      <Route path="/signin" element={<Singin/>} />
+      <Route path="/home" element={<Home/>} />
+      
         {/* Có thể thêm các route khác ở đây */}
       </Routes>
       
