@@ -1,7 +1,47 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import '../SanPham/sanPham.css'
-const SanPham = () => {
+import ItemSanPham from "./ItemSanPham";
+const SanPham = ({token}) => {
     const [isOpen, setisOpen] = useState({})
+    
+     const [listSP,setListSp] = useState([])
+     const apiUrl = process.env.REACT_APP_API_URL
+    
+    
+    
+    
+    
+    // if(user) {
+    //   setToken(resUser.AccessToken)      
+    // }
+    
+     useEffect(()=>{
+        const getListSP = async () => {
+            try {
+                const res = await fetch(apiUrl+'/san-pham',
+                    {
+                        method: 'GET',  // Hoặc 'POST' nếu bạn gửi dữ liệu
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`,  // Thêm token vào header
+                        },
+                    }
+                )
+                if (!res.ok) {
+                    throw new Error('Fetch failed');
+                }
+        
+                const data = await res.json();
+                // console.log(data);
+                
+                setListSp(data.data)
+            } catch (error) {
+                console.log(error);
+                
+            }
+        }
+        getListSP()
+     },[])
     const togglemenu = (menu) => {
         setisOpen((prev) => ({
             ...prev,
@@ -9,6 +49,8 @@ const SanPham = () => {
         }))
 
     }
+    
+   
 
     return (
         <div>
@@ -105,6 +147,14 @@ const SanPham = () => {
                 </div>
 
             </section>
+            <h2>Danh sách sản phẩm Laptop</h2>
+            {listSP.map((laptop) => (
+                <ItemSanPham
+                    key={laptop._id}
+                    {...laptop}
+                    
+                />
+            ))}
         </div>
     );
 }

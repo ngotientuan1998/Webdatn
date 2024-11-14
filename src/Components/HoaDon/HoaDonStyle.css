@@ -1,0 +1,70 @@
+/* InvoiceManagement.css */
+.invoice-management {
+    display: flex;
+    flex-direction: column; /* Hiển thị các hóa đơn theo chiều dọc */
+    padding: 20px;
+  }
+  
+  .invoice-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    transition: transform 0.3s ease;
+  }
+  
+  .invoice-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .invoice-item-details {
+    flex: 1;
+  }
+  
+  .invoice-id {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  .invoice-customer,
+  .invoice-date,
+  .invoice-total {
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .invoice-status {
+    font-size: 14px;
+    font-weight: 600;
+    color: #4CAF50; /* Màu sắc tùy theo trạng thái đơn hàng */
+  }
+  
+  .invoice-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .button {
+    padding: 8px 12px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .button:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+  }
+  

@@ -1,0 +1,55 @@
+.customer-item {
+    display: flex;
+    align-items: center;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #ffffff;
+  }
+  
+  .customer-item:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .avatar-container {
+    margin-right: 20px;
+    flex-shrink: 0;
+  }
+  
+  .avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #6c63ff;
+    transition: border-color 0.3s;
+  }
+  
+  .info-container {
+    flex: 1;
+  }
+  
+  .name {
+    font-size: 1.5em;
+    margin: 0;
+    color: #333;
+  }
+  
+  .username {
+    font-size: 0.8em;
+    color: #888;
+  }
+  
+  .info {
+    margin: 5px 0;
+    font-size: 1em;
+    color: #555;
+  }
+  
+  .info strong {
+    color: #6c63ff;
+  }
