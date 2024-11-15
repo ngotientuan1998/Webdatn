@@ -7,8 +7,10 @@ const SanPham = ({ token, showCT }) => {
     const [isOpen, setisOpen] = useState({})
     const [openDialog, setOpenDialog] = useState(false);
     const [listSP, setListSp] = useState([])
-    const [branList,setBranlist] = useState([])
+    const [branList, setBranlist] = useState([])
     const [searchQuery, setSearchQuery] = useState("");  // Thêm state cho từ khóa tìm kiếm
+    const [selectedBrand, setSelectedBrand] = useState(null); // Tên hãng được chọn
+    const [openMenu, setOpenMenu] = useState(null); // Quản lý tên của menu đang mở
     const apiUrl = process.env.REACT_APP_API_URL
 
 
@@ -21,7 +23,11 @@ const SanPham = ({ token, showCT }) => {
     const handleCloseDialog = () => {
         setOpenDialog(false);
     };
-
+    const handleBrandClick=(a)=>{
+        if(openMenu=="menu1"){
+            setSelectedBrand(a)
+        } else return
+    }
 
     // if(user) {
     //   setToken(resUser.AccessToken)      
@@ -50,6 +56,17 @@ const SanPham = ({ token, showCT }) => {
                 // data.data.array.forEach(item => {
                 //     brandCount[item.idHangSP.]
                 // });
+
+                data.data.forEach((item) => {
+                    brandCount[item.idHangSP.TenHang.toLowerCase()] = (brandCount[item.idHangSP.TenHang.toLowerCase()] || 0) + 1;
+                });
+
+                // Chuyển đối tượng thành mảng danh sách hãng
+                const brands = Object.entries(brandCount).map(([brand, count]) => ({
+                    brand,
+                    count,
+                }));
+                setBranlist(brands); // Lưu vào state
                 setListSp(data.data)
             } catch (error) {
                 console.log(error);
@@ -58,18 +75,35 @@ const SanPham = ({ token, showCT }) => {
         }
         getListSP()
     }, [])
-
-    // Hàm lọc sản phẩm theo tên
-    const filteredProducts = listSP.filter((product) =>
-        product.tenSP.toLowerCase().includes(searchQuery.toLowerCase()) // Lọc theo tên sản phẩm
-    );
-
+    
+     // Hàm lọc sản phẩm theo tên
+    // const filteredProducts = listSP.filter((product) =>{
+       
+    //    return product.tenSP.toLowerCase().includes(searchQuery.toLowerCase())})
+    //Hàm lọc sản phẩm theo tên
+    const filteredProducts = listSP.filter((product) =>{
+        const matchesName=searchQuery?
+        product.tenSP.toLowerCase().includes(searchQuery.toLowerCase())
+        :true 
+        //  // Lọc theo tên sản phẩm nếu có searchQuery
+         const matchesBrand = selectedBrand
+         ? product.idHangSP.TenHang.toLowerCase() === selectedBrand
+          : true;
+          
+       return matchesName&&matchesBrand
+});
+console.log(selectedBrand)
+     //chọn các tùy chọn   
     const togglemenu = (menu) => {
         setisOpen((prev) => ({
-            ...prev,
+           // Đóng tất cả menu
+        ...Object.keys(prev).reduce((acc, key) => {
+            acc[key] = false;  // Đảm bảo tất cả các menu đều đóng
+            return acc;
+        }, {}),
             [menu]: !prev[menu]
         }))
-
+      setOpenMenu(menu)
     }
 
 
@@ -78,11 +112,11 @@ const SanPham = ({ token, showCT }) => {
         <div>
             <section>
                 <h3>Chào mừng bạn đến với trang sản phẩm</h3>
-                <input 
-                type="text" 
-                placeholder="Tìm kiếm" 
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}  // Cập nhật searchQuery mỗi khi người dùng gõ
+                <input
+                    type="text"
+                    placeholder="Tìm kiếm"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}  // Cập nhật searchQuery mỗi khi người dùng gõ
                 />
                 <Button variant="contained" color="primary" onClick={handleOpenDialog}>Thêm sản phẩm</Button>
 
@@ -96,10 +130,16 @@ const SanPham = ({ token, showCT }) => {
                         {
                             isOpen.menu1 && (
                                 <ul className="list-menu">
-                                    <li className="list-item">dell</li>
-                                    <li className="list-item">dell</li>
-                                    <li className="list-item">dell</li>
-                                    <li className="list-item">dell</li>
+                                    {/* Hiển thị các hãng máy và số lượng của từng hãng */}
+                                    {branList.length > 0 ? (
+                                        branList.map((brandObj, index) => (
+                                            <li key={index} className="list-item" onClick={() => handleBrandClick(brandObj.brand.toLowerCase())}>
+                                                {brandObj.brand} ({brandObj.count}) {/* Hiển thị tên hãng và số lượng */}
+                                            </li>
+                                        ))
+                                    ) : (
+                                        <li className="list-item">Đang tải...</li>
+                                    )}
                                 </ul>
                             )
                         }
