@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './Style.css';
 
-const DialogThemSanPham = ({ open, onClose, token ,fetchSanPham}) => {
+const DialogThemSanPham = ({ open, onClose, token, fetchSanPham }) => {
+
     // console.log(token);
 
     const [productData, setProductData] = useState({
@@ -10,8 +11,35 @@ const DialogThemSanPham = ({ open, onClose, token ,fetchSanPham}) => {
         anhSP: [],
     });
     const [listHang, setListHang] = useState([]);
+    const validateData = () => {
+        const { tenSP, idHangSP, anhSP } = productData;
+
+        // Kiểm tra xem tên sản phẩm có rỗng không
+        if (!tenSP.trim()) {
+            return "Vui lòng nhập tên sản phẩm!";
+        }
+
+        // Kiểm tra xem hãng sản phẩm có được chọn không
+        if (!idHangSP) {
+            return "Vui lòng chọn hãng sản phẩm!";
+        }
+
+        // Kiểm tra xem ảnh sản phẩm có được chọn không
+        if (anhSP.length === 0) {
+            return "Vui lòng chọn ít nhất một ảnh sản phẩm!";
+        }
+
+        return null; // Dữ liệu hợp lệ
+    };
+
     // thêm sản phẩm 
     const postSanPham = async () => {
+        // Kiểm tra dữ liệu trước khi gửi
+        const validationError = validateData();
+        if (validationError) {
+            alert(validationError); // Hiển thị lỗi
+            return; // Dừng lại nếu có lỗi
+        }
         const formData = new FormData()
         formData.append('tenSP', productData.tenSP);
         formData.append('idHangSP', productData.idHangSP);

@@ -19,7 +19,7 @@ const ChiTietSPComponent = ({ idSanPham, back }) => {
     useEffect(() => {
         const fetchListCTSP = async () => {
             try {
-                const res = await fetch(apiUrl + '/chi-tiet-san-pham/' + idSanPham)
+                const res = await fetch(apiUrl + '/chi-tiet-san-pham/' + idSanPham._id)
                 if (!res.ok) {
                     throw new Error('Fetch failed');
                 }
@@ -40,12 +40,12 @@ const ChiTietSPComponent = ({ idSanPham, back }) => {
 
     return (
         <div className="product-detail-list">
-            <h2>Danh sách chi tiết sản phẩm</h2>
+            <h2>Danh sách chi tiết sản phẩm {idSanPham.tenSP}</h2>
             <div className="button-container">
                 <button className="back-button" onClick={() => back('ql-sanpham')}>Quay lại</button>
                 <button className="add-button" onClick={openDialog}>Thêm Chi Tiết Sản Phẩm</button>
             </div>
-            <DialogThemChiTietSP open={isDialogOpen} onClose={closeDialog} />
+            <DialogThemChiTietSP open={isDialogOpen} idSanPham={idSanPham} onClose={closeDialog} />
             <div className="product-list">
                 {listSPCT.map((chiTiet) => (
                     <ItemChiTietSP

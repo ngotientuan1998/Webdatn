@@ -5,8 +5,12 @@ import { Button } from '@mui/material';
 import ProductDialog from "../DialogThemSP/ThemSP";
 const SanPham = ({ token, showCT }) => {
 
+    const [isOpen, setisOpen] = useState({})
     const [openDialog, setOpenDialog] = useState(false);
     const [listSP, setListSp] = useState([])
+    const [branList,setBranlist] = useState([])
+    const [searchQuery, setSearchQuery] = useState("");  // Thêm state cho từ khóa tìm kiếm
+
     const apiUrl = process.env.REACT_APP_API_URL
 
 
@@ -24,6 +28,7 @@ const SanPham = ({ token, showCT }) => {
     // if(user) {
     //   setToken(resUser.AccessToken)      
     // }
+
     const getListSP = async () => {
         try {
             const res = await fetch(apiUrl + '/san-pham',
@@ -39,6 +44,7 @@ const SanPham = ({ token, showCT }) => {
                 throw new Error('Fetch failed');
             }
 
+
             const data = await res.json();
             // console.log(data);
 
@@ -48,25 +54,37 @@ const SanPham = ({ token, showCT }) => {
 
         }
     }
+    const filteredProducts = listSP.filter((product) =>
+        product.tenSP.toLowerCase().includes(searchQuery.toLowerCase()) // Lọc theo tên sản phẩm
+    );
+
     useEffect(() => {
 
         getListSP()
     }, [])
 
+
     return (
         <div>
             <section>
                 <h3>Chào mừng bạn đến với trang sản phẩm</h3>
-                <input type="text" placeholder="Tìm kiếm" />
+
+                <input 
+                type="text" 
+                placeholder="Tìm kiếm" 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}  // Cập nhật searchQuery mỗi khi người dùng gõ
+                />
                 <Button variant="contained" color="primary" onClick={handleOpenDialog}>Thêm sản phẩm</Button>
 
                 {/* Hiển thị ProductDialog khi openDialog = true */}
                 {openDialog && <ProductDialog fetchSanPham={getListSP} open={openDialog} onClose={handleCloseDialog} token={token} />}
+
             </section>
             <h2>Danh sách sản phẩm Laptop</h2>
-            {listSP.map((laptop) => (
+            {filteredProducts.map((laptop) => (
                 <ItemSanPham
-                    onClick={() => { showCT(laptop._id) }}
+                    onClick={() => { showCT(laptop) }}
                     key={laptop._id}
                     {...laptop}
 
