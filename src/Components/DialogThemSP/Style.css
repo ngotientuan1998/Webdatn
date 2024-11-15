@@ -1,0 +1,109 @@
+/* Dialog Overlay */
+.dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  /* Dialog container */
+  .dialog-container {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Dialog Header */
+  .dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .dialog-header h2 {
+    font-size: 20px;
+    font-weight: 600;
+  }
+  
+  .close-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  /* Dialog Input Group */
+  .dialog-input-group {
+    margin-bottom: 15px;
+  }
+  
+  .dialog-input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  
+  .dialog-input-group input,
+  .dialog-input-group select {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .dialog-input-group input[type="file"] {
+    padding: 6px;
+  }
+  
+  /* Image Preview */
+  .image-preview-container {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  
+  .image-preview {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+  }
+  
+  /* Dialog Footer */
+  .dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  
+  .close-dialog-button,
+  .save-dialog-button {
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    border: none;
+  }
+  
+  .close-dialog-button {
+    background-color: #f8f9fa;
+    color: #555;
+  }
+  
+  .save-dialog-button {
+    background-color: #007bff;
+    color: #fff;
+  }
+  

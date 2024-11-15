@@ -4,34 +4,57 @@ import './DonHangStyle.css'
 
 const DonHangComponent = ({ token }) => {
   const apiUrl = process.env.REACT_APP_API_URL
+  const [chekRender, setchekRender] = useState(true)
 
   const [listDonHang, setListDonHang] = useState([])
-  useEffect(() => {
-    const fetchDonHang = async () => {
-      try {
-        const res = await fetch(apiUrl + '/don-hang', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,  // Thêm token vào header
-          },
-        })
-        if (!res.ok) {
-          throw new Error('Fetch failed');
-        }
-        const data = await res.json()
-        // console.log(data.data);
-        setListDonHang(data.data)
-
-      } catch (error) {
-        alert(error.message)
-        console.log(error.message);
-
+  const fetchDonHang = async () => {
+    try {
+      const res = await fetch(apiUrl + '/don-hang', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,  // Thêm token vào header
+        },
+      })
+      if (!res.ok) {
+        throw new Error('Fetch failed');
       }
+      const data = await res.json()
+      // console.log(data.data);
+      setListDonHang(data.data)
+
+    } catch (error) {
+      alert(error.message)
+      console.log(error.message);
+
     }
+  }
+  const duyetDon = async (id) => {
+    try {
+      const res = await fetch(apiUrl + '/don-hang/duyet-don/' + id, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,  // Thêm token vào header
+        },
+      })
+      if(!res.ok){
+        throw new Error('Fetch failed');
+      }
+      const data = res.json()
+      console.log(data);
+      setchekRender(!chekRender)
+      
+    } catch (error) {
+      alert(error.message)
+      console.log(error.message);
+    }
+  }
+  useEffect(() => {
+
     fetchDonHang()
-  }, [])
-  
+  }, [chekRender])
+
   // const handleApprove = (orderId) => {
   //   // Xử lý duyệt đơn hàng
   //   setOrders(orders.map((order) =>
@@ -56,7 +79,7 @@ const DonHangComponent = ({ token }) => {
           <div className="order-buttons">
             {
               order.TrangThai === 'Chờ duyệt' && (
-                <button className="button" >
+                <button onClick={()=> duyetDon(order._id)} className="button" >
                   Duyệt đơn
                 </button>
               )

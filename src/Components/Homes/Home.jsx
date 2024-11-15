@@ -10,7 +10,7 @@ import ChiTietSPComponent from '../ChiTietSP/ChiTietSPComponent';
 
 const Home = () => {
   const [content, setContent] = useState('');
-  const [idSanPham, setidSanPham] = useState('')
+  const [idSanPham, setidSanPham] = useState({})
   const user = localStorage.getItem('user');
   const resUser = JSON.parse(user);
   const token = resUser.AccessToken;

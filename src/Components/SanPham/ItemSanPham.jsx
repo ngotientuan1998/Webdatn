@@ -32,7 +32,7 @@ const ItemSanPham = ({ onClick, tenSP, idHangSP, anhSP }) => {
                 </div>
                 <div className="right-column">
                     <div className="image-container">
-                        <img src={anhSP[currentImage]} alt={tenSP} className="product-image" />
+                        <img src={process.env.REACT_APP_API_URL+anhSP[currentImage]} alt={tenSP} className="product-image" />
                     </div>
                 </div>
             </div>

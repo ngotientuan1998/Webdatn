@@ -4,13 +4,18 @@ import ItemSanPham from "./ItemSanPham";
 import { Button } from '@mui/material';
 import ProductDialog from "../DialogThemSP/ThemSP";
 const SanPham = ({ token, showCT }) => {
+
     const [isOpen, setisOpen] = useState({})
     const [openDialog, setOpenDialog] = useState(false);
     const [listSP, setListSp] = useState([])
     const [branList, setBranlist] = useState([])
     const [searchQuery, setSearchQuery] = useState("");  // Thêm state cho từ khóa tìm kiếm
+
     const [selectedBrand, setSelectedBrand] = useState(null); // Tên hãng được chọn
     const [openMenu, setOpenMenu] = useState(null); // Quản lý tên của menu đang mở
+
+
+
     const apiUrl = process.env.REACT_APP_API_URL
 
 
@@ -32,30 +37,26 @@ const SanPham = ({ token, showCT }) => {
     // if(user) {
     //   setToken(resUser.AccessToken)      
     // }
+    
+    const getListSP = async () => {
+        try {
+            const res = await fetch(apiUrl + '/san-pham',
+                {
+                    method: 'GET',  // Hoặc 'POST' nếu bạn gửi dữ liệu
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,  // Thêm token vào header
+                    },
+                })
 
-    useEffect(() => {
-        const getListSP = async () => {
-            try {
-                const res = await fetch(apiUrl + '/san-pham',
-                    {
-                        method: 'GET',  // Hoặc 'POST' nếu bạn gửi dữ liệu
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${token}`,  // Thêm token vào header
-                        },
-                    }
-                )
                 if (!res.ok) {
                     throw new Error('Fetch failed');
                 }
-
                 const data = await res.json();
                 console.log(data.data);
                 // Đếm số lượng sản phẩm của mỗi hãng
                 const brandCount = {};
-                // data.data.array.forEach(item => {
-                //     brandCount[item.idHangSP.]
-                // });
+                
 
                 data.data.forEach((item) => {
                     brandCount[item.idHangSP.TenHang.toLowerCase()] = (brandCount[item.idHangSP.TenHang.toLowerCase()] || 0) + 1;
@@ -73,13 +74,7 @@ const SanPham = ({ token, showCT }) => {
 
             }
         }
-        getListSP()
-    }, [])
-    
-     // Hàm lọc sản phẩm theo tên
-    // const filteredProducts = listSP.filter((product) =>{
-       
-    //    return product.tenSP.toLowerCase().includes(searchQuery.toLowerCase())})
+        
     //Hàm lọc sản phẩm theo tên
     const filteredProducts = listSP.filter((product) =>{
         const matchesName=searchQuery?
@@ -105,22 +100,28 @@ console.log(selectedBrand)
         }))
       setOpenMenu(menu)
     }
+    useEffect(() => {
 
+        getListSP()
+    }, [])
+     
 
 
     return (
         <div>
             <section>
                 <h3>Chào mừng bạn đến với trang sản phẩm</h3>
-                <input
-                    type="text"
-                    placeholder="Tìm kiếm"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}  // Cập nhật searchQuery mỗi khi người dùng gõ
+
+                <input 
+                type="text" 
+                placeholder="Tìm kiếm" 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}  // Cập nhật searchQuery mỗi khi người dùng gõ
                 />
                 <Button variant="contained" color="primary" onClick={handleOpenDialog}>Thêm sản phẩm</Button>
 
                 {/* Hiển thị ProductDialog khi openDialog = true */}
+
                 {openDialog && <ProductDialog open={openDialog} onClose={handleCloseDialog} />}
                 <p>Tùy chọn</p>
 
@@ -217,11 +218,14 @@ console.log(selectedBrand)
                     </div>
                 </div>
 
+                {openDialog && <ProductDialog fetchSanPham={getListSP} open={openDialog} onClose={handleCloseDialog} token={token} />}
+
+
             </section>
             <h2>Danh sách sản phẩm Laptop</h2>
             {filteredProducts.map((laptop) => (
                 <ItemSanPham
-                    onClick={() => { showCT(laptop._id) }}
+                    onClick={() => { showCT(laptop) }}
                     key={laptop._id}
                     {...laptop}
 
