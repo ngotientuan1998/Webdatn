@@ -1,5 +1,5 @@
 
-
+import React from 'react';
 import { BrowserRouter as Router, Route, Switch,Routes } from 'react-router-dom';
 import Home from './Components/Homes/Home';
 import Singin from './Components/Singin/singin';

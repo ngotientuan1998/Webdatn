@@ -14,7 +14,7 @@ const Home = () => {
   const user = localStorage.getItem('user');
   const resUser = JSON.parse(user);
   const token = resUser.AccessToken;
-
+  //hàm để loại bỏ thuộc tính css của thẻ body ở component hiện tại
   useEffect(() => {
     document.body.style.cssText = `
         display: contents
