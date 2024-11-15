@@ -57,12 +57,14 @@
 
 /* Nút Sửa */
 .product-edit-button {
+  width: 80%;
   display: flex;
   justify-content: center;
   margin-top: 20px;
 }
 
 .product-edit-button button {
+  width: 80%;
   padding: 10px 20px;
   background-color: #007BFF;
   color: #fff;

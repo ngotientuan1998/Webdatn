@@ -10,7 +10,7 @@ const ItemChiTietSP = ({ chiTietSanPham}) => {
       <div className="product-detail-content">
         <div className="product-images">
           {chiTietSanPham.idSanPham.anhSP.map((url, index) => (
-            <img key={index} src={url} alt="Sản phẩm" className="product-image" />
+            <img key={index} src={process.env.REACT_APP_API_URL+url} alt="Sản phẩm" className="product-image" />
           ))}
         </div>
         <div className="product-details">

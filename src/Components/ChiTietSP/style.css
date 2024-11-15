@@ -15,4 +15,43 @@
     flex-direction: column;
     gap: 16px;
   }
-  
+/* Container chứa nút Quay lại và Thêm Chi Tiết Sản Phẩm */
+.button-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between; /* Đặt hai nút ở hai phía đối diện */
+  align-items: center;
+  margin-bottom: 15px; /* Khoảng cách bên dưới container */
+}
+
+/* CSS cho nút Quay lại */
+.back-button {
+  background-color: #f44336; /* Màu đỏ */
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.back-button:hover {
+  background-color: #d73833;
+}
+
+/* CSS cho nút Thêm Chi Tiết Sản Phẩm */
+.add-button {
+  background-color: #4CAF50; /* Màu xanh lá cây */
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-button:hover {
+  background-color: #45a049;
+}  

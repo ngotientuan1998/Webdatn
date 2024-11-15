@@ -3,10 +3,19 @@
 import React, { useEffect, useState } from 'react'
 import './style.css'; // CSS cho danh sách sản phẩm
 import ItemChiTietSP from './ItemChiTietSP';
-const ChiTietSPComponent = ({ token, idSanPham , back }) => {
+import DialogThemChiTietSP from './DialogThemCTSP';
+
+const ChiTietSPComponent = ({ idSanPham, back }) => {
     const [listSPCT, setlistSPCT] = useState([])
     const apiUrl = process.env.REACT_APP_API_URL
+    const [isDialogOpen, setDialogOpen] = useState(false);
+
+    const openDialog = () => setDialogOpen(true);
+    const closeDialog = () => setDialogOpen(false);
+   
+
     
+
     useEffect(() => {
         const fetchListCTSP = async () => {
             try {
@@ -15,8 +24,8 @@ const ChiTietSPComponent = ({ token, idSanPham , back }) => {
                     throw new Error('Fetch failed');
                 }
                 const data = await res.json()
-                console.log(data.data);
-                
+                // console.log(data.data);
+
                 setlistSPCT(data.data)
 
             } catch (error) {
@@ -27,12 +36,16 @@ const ChiTietSPComponent = ({ token, idSanPham , back }) => {
         fetchListCTSP()
     }, [])
 
-
+    
 
     return (
         <div className="product-detail-list">
             <h2>Danh sách chi tiết sản phẩm</h2>
-            <button className="back-button" onClick={()=>back('ql-sanpham')}>Quay lại</button>
+            <div className="button-container">
+                <button className="back-button" onClick={() => back('ql-sanpham')}>Quay lại</button>
+                <button className="add-button" onClick={openDialog}>Thêm Chi Tiết Sản Phẩm</button>
+            </div>
+            <DialogThemChiTietSP open={isDialogOpen} onClose={closeDialog} />
             <div className="product-list">
                 {listSPCT.map((chiTiet) => (
                     <ItemChiTietSP
@@ -41,6 +54,7 @@ const ChiTietSPComponent = ({ token, idSanPham , back }) => {
                     />
                 ))}
             </div>
+            
         </div>
     )
 }
