@@ -69,17 +69,33 @@
   /* Image Preview */
   .image-preview-container {
     display: flex;
-    gap: 8px;
-    margin-top: 10px;
-  }
-  
-  .image-preview {
-    width: 60px;
-    height: 60px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.image-preview-item {
+    position: relative;
+}
+
+.image-preview {
+    width: 100px;
+    height: 100px;
     object-fit: cover;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-  }
+    border: 1px solid #ccc;
+}
+
+.image-preview-item button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 2px 5px;
+}
+
   
   /* Dialog Footer */
   .dialog-footer {
@@ -106,4 +122,10 @@
     background-color: #007bff;
     color: #fff;
   }
+  /* Style cho các input bị lỗi */
+.dialog-input-group .error {
+  border: 2px solid red;
+  background-color: #ffe6e6; /* Màu nền nhạt để làm nổi bật */
+}
+
   

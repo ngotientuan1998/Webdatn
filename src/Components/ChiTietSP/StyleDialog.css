@@ -81,3 +81,9 @@
     background-color: #4CAF50;
     color: white;
 }
+/* Style cho các input bị lỗi */
+.dialog-input-group .error {
+    border: 2px solid red;
+    background-color: #ffe6e6; /* Màu nền nhạt để làm nổi bật */
+}
+
