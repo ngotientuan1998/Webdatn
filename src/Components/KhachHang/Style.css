@@ -1,0 +1,45 @@
+.item-KhachHang {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #f9f9f9; /* Nền nhạt */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
+  }
+  
+  .item-KhachHang h1 {
+    text-align: center;
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .add-user-button {
+    display: block;
+    margin-left: auto; /* Đẩy nút sang phải */
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff; /* Màu xanh nổi bật */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-user-button:hover {
+    background-color: #0056b3; /* Màu xanh đậm hơn khi hover */
+  }
+  
+  .add-user-button:active {
+    background-color: #003f7f; /* Màu khi bấm */
+  }
+  
+  .customer-list {
+    margin-top: 20px; /* Khoảng cách giữa nút và danh sách */
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* Khoảng cách giữa các item */
+  }
+  

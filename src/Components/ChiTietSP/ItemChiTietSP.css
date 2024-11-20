@@ -64,7 +64,7 @@
 }
 
 .product-edit-button button {
-  width: 70%; /* Chiếm 70% chiều rộng của hàng */
+  width: 100%; /* Chiếm 70% chiều rộng của hàng */
   padding: 10px 20px;
   background-color: #4CAF50;
   color: white;

@@ -136,7 +136,7 @@ const SanPham = ({ token, showCT }) => {
 
                 <div className="tuychon">
                     <div className="menu1" onMouseEnter={() => togglemenu('menu1')} onMouseLeave={() => togglemenu('menu1')}>
-                        <button>hãng máy</button>
+                        <button>Hãng máy</button>
                         {
                             isOpen.menu1 && (
                                 <ul className="list-menu">
@@ -144,7 +144,7 @@ const SanPham = ({ token, showCT }) => {
                                     {branList.length > 0 ? (
                                         branList.map((brandObj, index) => (
                                             <li key={index} className="list-item" onClick={() => handleBrandClick(brandObj.brand.toLowerCase())}>
-                                                {brandObj.brand} ({brandObj.count}) {/* Hiển thị tên hãng và số lượng */}
+                                                {brandObj.brand.toUpperCase()} ({brandObj.count}) {/* Hiển thị tên hãng và số lượng */}
                                             </li>
                                         ))
                                     ) : (
@@ -156,7 +156,7 @@ const SanPham = ({ token, showCT }) => {
 
                     </div>
                     <div className="menu1" onMouseEnter={() => togglemenu('menu2')} onMouseLeave={() => togglemenu('menu2')}>
-                        <button>giá</button>
+                        <button>Giá</button>
                         {
                             isOpen.menu2 && (
                                 <ul className="list-menu">
@@ -177,7 +177,7 @@ const SanPham = ({ token, showCT }) => {
                                     <li className="list-item">4gb</li>
                                     <li className="list-item">8gb</li>
                                     <li className="list-item">16gb</li>
-                                    <li className="list-item">trên 16gb</li>
+                                    <li className="list-item">Trên 16gb</li>
                                 </ul>
                             )
                         }
@@ -188,10 +188,10 @@ const SanPham = ({ token, showCT }) => {
                         {
                             isOpen.menu4 && (
                                 <ul className="list-menu">
-                                    <li className="list-item">intel core i3</li>
-                                    <li className="list-item">intel core i5</li>
-                                    <li className="list-item">intel core i7</li>
-                                    <li className="list-item">intel core i9</li>
+                                    <li className="list-item">Intel core i3</li>
+                                    <li className="list-item">Intel core i5</li>
+                                    <li className="list-item">Intel core i7</li>
+                                    <li className="list-item">Intel core i9</li>
                                 </ul>
                             )
                         }

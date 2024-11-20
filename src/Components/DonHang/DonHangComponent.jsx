@@ -1,12 +1,42 @@
 
 import React, { useEffect, useState } from 'react'
 import './DonHangStyle.css'
+import DialogDonHangCT from './DialogDonHangCT'
 
 const DonHangComponent = ({ token }) => {
   const apiUrl = process.env.REACT_APP_API_URL
   const [chekRender, setchekRender] = useState(true)
-
+  const [listDHCT, setlistDHCT] = useState([])
   const [listDonHang, setListDonHang] = useState([])
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const handleOpenDialog = () => {
+    setDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setDialogOpen(false);
+  };
+  const fetchDHCT = async (idDonHang) => {
+    try {
+      const res = await fetch(apiUrl + '/chi-tiet-don-hang/' + idDonHang, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        }
+      })
+      if (!res.ok) {
+        throw new Error('Fetch failed');
+      }
+      const data = await res.json()
+      // console.log(data.data)
+
+      setlistDHCT(data.data)
+
+    } catch (error) {
+      console.log(error.message);
+      // alert(error.message)
+    }
+  }
   const fetchDonHang = async () => {
     try {
       const res = await fetch(apiUrl + '/don-hang', {
@@ -38,13 +68,13 @@ const DonHangComponent = ({ token }) => {
           'Authorization': `Bearer ${token}`,  // Thêm token vào header
         },
       })
-      if(!res.ok){
+      if (!res.ok) {
         throw new Error('Fetch failed');
       }
       const data = res.json()
       console.log(data);
       setchekRender(!chekRender)
-      
+
     } catch (error) {
       alert(error.message)
       console.log(error.message);
@@ -55,18 +85,24 @@ const DonHangComponent = ({ token }) => {
     fetchDonHang()
   }, [chekRender])
 
-  // const handleApprove = (orderId) => {
-  //   // Xử lý duyệt đơn hàng
-  //   setOrders(orders.map((order) =>
-  //     order.id === orderId ? { ...order, status: 'Đã duyệt' } : order
-  //   ));
-  //   console.log('Duyệt đơn hàng:', orderId);
-  // };
+
   return (
     <div className="order-management">
       <h1>Quản lý Đơn Hàng</h1>
+      <DialogDonHangCT
+        open={dialogOpen}
+        onClose={handleCloseDialog}
+        orderDetails={listDHCT}
+      />
       {listDonHang.map((order) => (
-        <div key={order._id} className="order-item">
+        <div
+          key={order._id}
+          onClick={() => {
+            fetchDHCT(order._id);
+            handleOpenDialog();
+          }}
+          className="order-item"
+        >
           <div className="order-item-details">
             <div className="order-id">Mã đơn: {order._id}</div>
             <div className="order-customer">Khách hàng: {order.idKhachHang.HoTen}</div>
@@ -77,16 +113,21 @@ const DonHangComponent = ({ token }) => {
             <div className="order-status">{order.TrangThai}</div>
           </div>
           <div className="order-buttons">
-            {
-              order.TrangThai === 'Chờ duyệt' && (
-                <button onClick={()=> duyetDon(order._id)} className="button" >
-                  Duyệt đơn
-                </button>
-              )
-            }
+            {order.TrangThai === 'Chờ duyệt' && (
+              <button
+                onClick={(event) => {
+                  event.stopPropagation(); // Ngăn sự kiện lan lên
+                  duyetDon(order._id);
+                }}
+                className="button"
+              >
+                Duyệt đơn
+              </button>
+            )}
           </div>
         </div>
       ))}
+
     </div>
   )
 }
