@@ -1,0 +1,48 @@
+/* Toàn bộ bố cục */
+.user-info {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 20px auto;
+    border: 1px solid #007bff;
+  }
+  
+  /* Hình đại diện */
+  .user-avatar {
+    flex: 0 0 120px;
+    margin-right: 20px;
+  }
+  
+  .avatar-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #007bff;
+  }
+  
+  /* Chi tiết người dùng */
+  .user-details {
+    flex: 1;
+    color: #333;
+  }
+  
+  .user-details h2 {
+    font-size: 24px;
+    color: #007bff;
+    margin-bottom: 10px;
+  }
+  
+  .user-details p {
+    margin: 5px 0;
+    font-size: 16px;
+  }
+  
+  .user-details p strong {
+    color: #0056b3;
+  }
+  

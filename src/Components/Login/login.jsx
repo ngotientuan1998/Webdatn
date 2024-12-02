@@ -20,7 +20,7 @@ const Login = () => {
     const handleHome = async () => {
         if (UserName === "" || Password === "") return alert('Không để trống')
         try {
-            console.log("đã vào 1")
+            // console.log("đã vào 1")
             const res = await fetch(apiUrl+`/auth/login/admin`,
                 {
                     method: 'POST',

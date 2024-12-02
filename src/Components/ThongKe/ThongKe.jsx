@@ -39,7 +39,7 @@ const RevenueStatistics = () => {
     // Hàm để tính toán ngày bắt đầu và kết thúc của tuần hiện tại
     const getWeekRange = (date) => {
         const startOfWeek = new Date(date);
-        startOfWeek.setDate(date.getDate() - date.getDay()+1); // Bắt đầu tuần (Thứ Hai)
+        startOfWeek.setDate(date.getDate() - date.getDay() + 1); // Bắt đầu tuần (Thứ Hai)
         const endOfWeek = new Date(startOfWeek);
         endOfWeek.setDate(startOfWeek.getDate() + 6); // Kết thúc tuần (Chủ Nhật)
         return { startOfWeek, endOfWeek };
@@ -47,21 +47,21 @@ const RevenueStatistics = () => {
 
     // Cập nhật ngày bắt đầu và kết thúc của tuần hiện tại
     const { startOfWeek, endOfWeek } = getWeekRange(currentDate);
-    
+
     // Lấy dữ liệu từ API khi component render hoặc khi tuần thay đổi
     useEffect(() => {
         const fetchRevenueData = async () => {
             try {
-                const response = await axios.get(apiUrl+"/thong-ke/thongke", {
+                const response = await axios.get(apiUrl + "/thong-ke/thongke", {
                     params: { startOfWeek, endOfWeek }
                 });
 
                 // Giả sử API trả về object với cấu trúc { dailyRevenue: [array của doanh thu từng ngày trong tuần] }
                 const data = response.data;
                 // console.log("Received Data: ", data);
-                setWeeklyRevenueData(data.dailyRevenue||[]);
-                setTotalRevenue(data.totalRevenue||0);
-                
+                setWeeklyRevenueData(data.dailyRevenue || []);
+                setTotalRevenue(data.totalRevenue || 0);
+
             } catch (error) {
                 console.error("Error fetching revenue data:", error);
             }
@@ -69,7 +69,7 @@ const RevenueStatistics = () => {
 
         fetchRevenueData();
     }, [currentDate]);
-    
+
     // Hàm để lấy số tuần của một ngày cụ thể
     const getWeekNumber = (date) => {
         const startDate = new Date(date.getFullYear(), 0, 1);
@@ -101,7 +101,7 @@ const RevenueStatistics = () => {
             }
         ]
     };
-    startOfWeek.setDate(startOfWeek.getDate() -5)
+    startOfWeek.setDate(startOfWeek.getDate() - 5)
     const chartOptions = {
         responsive: true,
         plugins: {
@@ -137,21 +137,42 @@ const RevenueStatistics = () => {
         newDate.setDate(currentDate.getDate() + 7); // Tiến 1 tuần
         setCurrentDate(newDate);
     };
-    
+
 
     return (
         <div>
-            <h2>Thống kê doanh thu theo tuần</h2>
-            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
-            <button onClick={handleBack} style={{ fontSize: '20px', cursor: 'pointer', background: 'blue', border: 'none' }}>←</button>
-                <span style={{ margin: '0 15px' }}>
-                    Doanh thu tuần {getWeekNumber(currentDate)} từ ngày {startOfWeek.getDate()} đến {endOfWeek.getDate()} tháng {endOfWeek.getMonth() +1} năm {endOfWeek.getFullYear()}
+            <h2 style={{ textAlign: 'center' }}>Thống kê doanh thu theo tuần</h2>
+            <div style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginBottom: '20px',
+            }}>
+                <button onClick={handleBack} style={{
+                    fontSize: '20px',
+                    cursor: 'pointer',
+                    background: 'blue',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '5px',
+                    padding: '5px 10px',
+                }}>←</button>
+                <span style={{ margin: '0 15px', textAlign: 'center' }}>
+                    Doanh thu tuần {getWeekNumber(currentDate)} từ ngày {startOfWeek.getDate()} đến {endOfWeek.getDate()} tháng {endOfWeek.getMonth() + 1} năm {endOfWeek.getFullYear()}
                 </span>
-                <button onClick={handleNext} style={{ fontSize: '20px', cursor: 'pointer', background: 'blue', border: 'none' }}>→</button>
+                <button onClick={handleNext} style={{
+                    fontSize: '20px',
+                    cursor: 'pointer',
+                    background: 'blue',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '5px',
+                    padding: '5px 10px',
+                }}>→</button>
             </div>
             <div>
                 <Bar data={chartData} options={chartOptions} />
-                <h4>Tổng doanh thu: {totalRevenue?totalRevenue.toLocaleString("vi-VN"):"0"} VND</h4>
+                <h4>Tổng doanh thu: {totalRevenue ? totalRevenue.toLocaleString("vi-VN") : "0"} VND</h4>
             </div>
         </div>
     );

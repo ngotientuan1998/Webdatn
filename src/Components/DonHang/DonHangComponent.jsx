@@ -88,7 +88,7 @@ const DonHangComponent = ({ token }) => {
 
   return (
     <div className="order-management">
-      <h1>Quản lý Đơn Hàng</h1>
+      <h2>Quản lý Đơn Hàng</h2>
       <DialogDonHangCT
         open={dialogOpen}
         onClose={handleCloseDialog}

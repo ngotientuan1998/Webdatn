@@ -23,7 +23,7 @@ input[type="text"] {
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    width: 100%;  /* Thay đổi từ chiều rộng cố định sang chiếm 100% */
+    width: 80%;  /* Thay đổi từ chiều rộng cố định sang chiếm 100% */
     box-sizing: border-box; /* Đảm bảo padding không làm vượt quá chiều rộng */
 }
 
@@ -34,11 +34,7 @@ button, .MuiButton-containedPrimary {
 }
 
 /* Dropdown menu container */
-.tuychon {
-    display: flex;
-    gap: 20px;
-    margin-top: 20px;
-}
+
 
 .menu1 {
     position: relative;

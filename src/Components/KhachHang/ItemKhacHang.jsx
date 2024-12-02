@@ -28,7 +28,7 @@ const ItemKhacHang = ({
             {HoTen} <span className="username">({UserName})</span>
           </h2>
           <p className="info">
-            <strong>Tuổi:</strong> {Tuoi}
+            <strong>Ngày sinh:</strong> {Tuoi}
           </p>
           <p className="info">
             <strong>Email:</strong> {Email}
@@ -48,9 +48,6 @@ const ItemKhacHang = ({
       <div className="actions">
         <button className="edit-button" onClick={onEdit}>
           Sửa
-        </button>
-        <button className="delete-button" onClick={onDelete}>
-          Xóa
         </button>
       </div>
     </div>

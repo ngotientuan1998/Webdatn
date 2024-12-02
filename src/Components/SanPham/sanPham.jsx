@@ -123,113 +123,35 @@ const SanPham = ({ token, showCT }) => {
 
                 <input
                     type="text"
-                    placeholder="Tìm kiếm"
+                    placeholder="Tìm kiếm theo tên sản phẩm"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}  // Cập nhật searchQuery mỗi khi người dùng gõ
                 />
-                <Button variant="contained" color="primary" onClick={handleOpenDialog}>Thêm sản phẩm</Button>
+                <div className="menu1" onMouseEnter={() => togglemenu('menu1')} onMouseLeave={() => togglemenu('menu1')}>
+                    <button>Hãng máy</button>
+                    {
+                        isOpen.menu1 && (
+                            <ul className="list-menu">
+                                {/* Hiển thị các hãng máy và số lượng của từng hãng */}
+                                {branList.length > 0 ? (
+                                    branList.map((brandObj, index) => (
+                                        <li key={index} className="list-item" onClick={() => handleBrandClick(brandObj.brand.toLowerCase())}>
+                                            {brandObj.brand.toUpperCase()} ({brandObj.count}) {/* Hiển thị tên hãng và số lượng */}
+                                        </li>
+                                    ))
+                                ) : (
+                                    <li className="list-item">Đang tải...</li>
+                                )}
+                            </ul>
+                        )
+                    }
 
+                </div>
+                <Button variant="contained" color="primary" onClick={handleOpenDialog}>Thêm sản phẩm</Button>
                 {/* Hiển thị ProductDialog khi openDialog = true */}
                 {isOpenDialogUpdate && <SuaSP data={dataUpdate} token={token} fetchSanPham={getListSP} onClose={closeDialogSua} />}
                 {openDialog && <ProductDialog open={openDialog} onClose={handleCloseDialog} />}
-                <p>Tùy chọn</p>
-
-                <div className="tuychon">
-                    <div className="menu1" onMouseEnter={() => togglemenu('menu1')} onMouseLeave={() => togglemenu('menu1')}>
-                        <button>Hãng máy</button>
-                        {
-                            isOpen.menu1 && (
-                                <ul className="list-menu">
-                                    {/* Hiển thị các hãng máy và số lượng của từng hãng */}
-                                    {branList.length > 0 ? (
-                                        branList.map((brandObj, index) => (
-                                            <li key={index} className="list-item" onClick={() => handleBrandClick(brandObj.brand.toLowerCase())}>
-                                                {brandObj.brand.toUpperCase()} ({brandObj.count}) {/* Hiển thị tên hãng và số lượng */}
-                                            </li>
-                                        ))
-                                    ) : (
-                                        <li className="list-item">Đang tải...</li>
-                                    )}
-                                </ul>
-                            )
-                        }
-
-                    </div>
-                    <div className="menu1" onMouseEnter={() => togglemenu('menu2')} onMouseLeave={() => togglemenu('menu2')}>
-                        <button>Giá</button>
-                        {
-                            isOpen.menu2 && (
-                                <ul className="list-menu">
-                                    <li className="list-item">5tr</li>
-                                    <li className="list-item">10tr</li>
-                                    <li className="list-item">15tr</li>
-                                    <li className="list-item">Trên 15tr</li>
-                                </ul>
-                            )
-                        }
-
-                    </div>
-                    <div className="menu1" onMouseEnter={() => togglemenu('menu3')} onMouseLeave={() => togglemenu('menu3')}>
-                        <button>RAM</button>
-                        {
-                            isOpen.menu3 && (
-                                <ul className="list-menu">
-                                    <li className="list-item">4gb</li>
-                                    <li className="list-item">8gb</li>
-                                    <li className="list-item">16gb</li>
-                                    <li className="list-item">Trên 16gb</li>
-                                </ul>
-                            )
-                        }
-
-                    </div>
-                    <div className="menu1" onMouseEnter={() => togglemenu('menu4')} onMouseLeave={() => togglemenu('menu4')}>
-                        <button>Car đồ họa</button>
-                        {
-                            isOpen.menu4 && (
-                                <ul className="list-menu">
-                                    <li className="list-item">Intel core i3</li>
-                                    <li className="list-item">Intel core i5</li>
-                                    <li className="list-item">Intel core i7</li>
-                                    <li className="list-item">Intel core i9</li>
-                                </ul>
-                            )
-                        }
-
-                    </div>
-                    <div className="menu1" onMouseEnter={() => togglemenu('menu5')} onMouseLeave={() => togglemenu('menu5')}>
-                        <button>Màn hình</button>
-                        {
-                            isOpen.menu5 && (
-                                <ul className="list-menu">
-                                    <li className="list-item">13.3 inch</li>
-                                    <li className="list-item">14 inch</li>
-                                    <li className="list-item">15 inch</li>
-                                    <li className="list-item">15.6 inch</li>
-                                </ul>
-                            )
-                        }
-
-                    </div>
-                    <div className="menu1" onMouseEnter={() => togglemenu('menu6')} onMouseLeave={() => togglemenu('menu6')}>
-                        <button>Dung lượng ổ cứng</button>
-                        {
-                            isOpen.menu6 && (
-                                <ul className="list-menu">
-                                    <li className="list-item">SSD 120GB-128GB</li>
-                                    <li className="list-item">SSD 180GB -256GB</li>
-                                    <li className="list-item">SSD 480GB-512GB</li>
-                                    <li className="list-item">4T</li>
-                                </ul>
-                            )
-                        }
-
-                    </div>
-                </div>
-
                 {openDialog && <ProductDialog fetchSanPham={getListSP} open={openDialog} onClose={handleCloseDialog} token={token} />}
-
-
             </section>
             <h2>Danh sách sản phẩm Laptop</h2>
             {filteredProducts.map((laptop) => (
