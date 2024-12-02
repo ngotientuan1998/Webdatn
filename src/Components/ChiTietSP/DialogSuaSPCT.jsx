@@ -1,22 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './StyleDialog.css'; // Giả sử bạn đã có CSS cho dialog
 
-const DialogThemChiTietSP = ({ open, onClose, idSanPham, render }) => {
+const DialogSuaSPCT = ({ close, data, render }) => {
     const user = localStorage.getItem('user');
     const resUser = JSON.parse(user);
     const token = resUser.AccessToken;
+    // console.log('data',data._id);
+
 
     const [chiTietData, setChiTietData] = useState({
-        idSanPham,
-        MauSac: '',
-        Ram: '',
-        SSD: '',
-        ManHinh: '',
-        SoLuong: '',
-        Gia: 0,
-        MoTa: ''
+        MauSac: data.MauSac || '',
+        Ram: data.Ram || '',
+        SSD: data.SSD || '',
+        ManHinh: data.ManHinh || '',
+        SoLuong: data.SoLuong || '',
+        Gia: data.Gia || 0,
+        MoTa: data.MoTa
     });
-    
+
     const [errors, setErrors] = useState({}); // State lưu lỗi
 
     const handleChange = (e) => {
@@ -61,8 +62,8 @@ const DialogThemChiTietSP = ({ open, onClose, idSanPham, render }) => {
         };
 
         try {
-            const res = await fetch(process.env.REACT_APP_API_URL + '/chi-tiet-san-pham', {
-                method: 'POST',
+            const res = await fetch(process.env.REACT_APP_API_URL + '/chi-tiet-san-pham/' + data._id, {
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,  // Thêm token vào header
@@ -77,7 +78,7 @@ const DialogThemChiTietSP = ({ open, onClose, idSanPham, render }) => {
             } else {
                 const data = await res.json();
                 render(); // Cập nhật lại danh sách
-                onClose();
+                close();
                 alert(data.message);
             }
 
@@ -87,14 +88,26 @@ const DialogThemChiTietSP = ({ open, onClose, idSanPham, render }) => {
         }
     };
 
-    if (!open) return null; // Nếu dialog không mở, không hiển thị gì
+
+    useEffect(() => {
+        if (close) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+        return () => {
+            document.body.style.overflow = 'auto';
+        };
+    }, [close]);
+
+    if (!close) return null; // Nếu dialog không mở, không hiển thị gì
 
     return (
         <div className="dialog-overlay">
             <div className="dialog-container">
                 <div className="dialog-header">
-                    <h2>Thêm Chi Tiết Sản Phẩm {idSanPham.tenSP}</h2>
-                    <button className="close-button" onClick={onClose}>
+                    <h2>Sửa Chi Tiết Sản Phẩm </h2>
+                    <button className="close-button" onClick={close}>
                         &times;
                     </button>
                 </div>
@@ -102,76 +115,83 @@ const DialogThemChiTietSP = ({ open, onClose, idSanPham, render }) => {
                     {/* Các trường nhập liệu */}
                     <div className="dialog-input-group">
                         <label>Màu Sắc:</label>
-                        <input 
-                            type="text" 
-                            onChange={handleChange} 
-                            name="MauSac" 
+                        <input
+                            value={chiTietData.MauSac}
+                            type="text"
+                            onChange={handleChange}
+                            name="MauSac"
                             placeholder="Nhập màu sắc"
                             className={errors.MauSac ? 'error' : ''}
                         />
                     </div>
                     <div className="dialog-input-group">
                         <label>RAM:</label>
-                        <input 
-                            type="text" 
-                            onChange={handleChange} 
-                            name="Ram" 
+                        <input
+                            value={chiTietData.Ram}
+                            type="text"
+                            onChange={handleChange}
+                            name="Ram"
                             placeholder="Nhập dung lượng RAM"
                             className={errors.Ram ? 'error' : ''}
                         />
                     </div>
                     <div className="dialog-input-group">
                         <label>SSD:</label>
-                        <input 
-                            type="text" 
-                            onChange={handleChange} 
-                            name="SSD" 
+                        <input
+                            value={chiTietData.SSD}
+                            type="text"
+                            onChange={handleChange}
+                            name="SSD"
                             placeholder="Nhập dung lượng SSD"
                             className={errors.SSD ? 'error' : ''}
                         />
                     </div>
                     <div className="dialog-input-group">
                         <label>Màn Hình:</label>
-                        <input 
-                            type="text" 
-                            onChange={handleChange} 
-                            name="ManHinh" 
+                        <input
+                            value={chiTietData.ManHinh}
+                            type="text"
+                            onChange={handleChange}
+                            name="ManHinh"
                             placeholder="Nhập kích thước màn hình"
                             className={errors.ManHinh ? 'error' : ''}
                         />
                     </div>
                     <div className="dialog-input-group">
                         <label>Số Lượng:</label>
-                        <input 
-                            type="number" 
-                            onChange={handleChange} 
-                            name="SoLuong" 
+                        <input
+                            value={chiTietData.SoLuong}
+                            type="number"
+                            onChange={handleChange}
+                            name="SoLuong"
                             placeholder="Nhập số lượng"
                             className={errors.SoLuong ? 'error' : ''}
                         />
                     </div>
                     <div className="dialog-input-group">
                         <label>Giá:</label>
-                        <input 
-                            type="number" 
-                            onChange={handleChange} 
-                            name="Gia" 
+                        <input
+                            value={chiTietData.Gia}
+                            type="number"
+                            onChange={handleChange}
+                            name="Gia"
                             placeholder="Nhập giá sản phẩm"
                             className={errors.Gia ? 'error' : ''}
                         />
                     </div>
                     <div className="dialog-input-group">
                         <label>Mô Tả:</label>
-                        <textarea 
-                            name="MoTa" 
-                            onChange={handleChange} 
+                        <textarea
+                            value={chiTietData.MoTa}
+                            name="MoTa"
+                            onChange={handleChange}
                             placeholder="Nhập mô tả sản phẩm"
                             className={errors.MoTa ? 'error' : ''}
                         ></textarea>
                     </div>
                 </div>
                 <div className="dialog-footer">
-                    <button className="close-dialog-button" onClick={onClose}>Đóng</button>
+                    <button className="close-dialog-button" onClick={close}>Đóng</button>
                     <button className="save-dialog-button" onClick={postCTSP}>Lưu</button>
                 </div>
             </div>
@@ -179,4 +199,4 @@ const DialogThemChiTietSP = ({ open, onClose, idSanPham, render }) => {
     );
 };
 
-export default DialogThemChiTietSP;
+export default DialogSuaSPCT;

@@ -69,12 +69,12 @@
   
   .button-container {
     display: flex;
-    justify-content: space-around; /* Căn đều các nút */
+    justify-content: space-between; /* Căn đều các nút */
     width: 100%; /* Chiếm toàn bộ chiều rộng */
   }
   
   .button {
-    width: 80%;
+    width: 100%;
     display: flex;
     justify-content: center;
     padding: 10px 15px;
@@ -93,12 +93,5 @@
     transform: translateY(-2px);
   }
   
-  .delete-button {
-    background-color: #f44336;
-  }
   
-  .delete-button:hover {
-    background-color: #e53935;
-    transform: translateY(-2px);
-  }
   

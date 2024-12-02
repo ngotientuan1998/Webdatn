@@ -2,74 +2,73 @@ import React, { useState, useEffect } from 'react';
 import './Style.css';
 
 const DialogThemSanPham = ({ open, onClose, token, fetchSanPham }) => {
-
-    // console.log(token);
-
     const [productData, setProductData] = useState({
         tenSP: '',
         idHangSP: '',
         anhSP: [],
     });
     const [listHang, setListHang] = useState([]);
+    const [errors, setErrors] = useState({}); // State lưu lỗi
+
+    // Hàm validate
     const validateData = () => {
         const { tenSP, idHangSP, anhSP } = productData;
+        const errors = {};
 
-        // Kiểm tra xem tên sản phẩm có rỗng không
         if (!tenSP.trim()) {
-            return "Vui lòng nhập tên sản phẩm!";
+            errors.tenSP = "Vui lòng nhập tên sản phẩm!";
         }
 
-        // Kiểm tra xem hãng sản phẩm có được chọn không
         if (!idHangSP) {
-            return "Vui lòng chọn hãng sản phẩm!";
+            errors.idHangSP = "Vui lòng chọn hãng sản phẩm!";
         }
 
-        // Kiểm tra xem ảnh sản phẩm có được chọn không
         if (anhSP.length === 0) {
-            return "Vui lòng chọn ít nhất một ảnh sản phẩm!";
+            errors.anhSP = "Vui lòng chọn ít nhất một ảnh sản phẩm!";
         }
 
-        return null; // Dữ liệu hợp lệ
+        setErrors(errors);
+        return Object.keys(errors).length === 0;
     };
 
-    // thêm sản phẩm 
+    // Thêm sản phẩm 
     const postSanPham = async () => {
         // Kiểm tra dữ liệu trước khi gửi
-        const validationError = validateData();
-        if (validationError) {
-            alert(validationError); // Hiển thị lỗi
-            return; // Dừng lại nếu có lỗi
-        }
-        const formData = new FormData()
+        if (!validateData()) return; // Nếu có lỗi, không tiếp tục
+
+        const formData = new FormData();
         formData.append('tenSP', productData.tenSP);
         formData.append('idHangSP', productData.idHangSP);
 
-        productData.anhSP.forEach((file, index) => {
+        productData.anhSP.forEach((file) => {
             formData.append('anhSP', file);
         });
+
         try {
             const res = await fetch(process.env.REACT_APP_API_URL + '/san-pham/', {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${token}`,  // Thêm token vào header
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: formData
-            })
+            });
+
             if (!res.ok) {
                 const errorData = await res.json();
+                alert(errorData.message);
                 console.log('Error:', errorData.message);
                 throw new Error('Fetch failed');
             }
-            const data = await res.json()
-            alert(data.message)
-            fetchSanPham()
-            onClose()
+
+            const data = await res.json();
+            alert(data.message);
+            fetchSanPham();
+            onClose();
 
         } catch (error) {
             console.log(error.message);
         }
-
-    }
+    };
 
     // Fetch danh sách hãng sản phẩm từ API
     useEffect(() => {
@@ -110,12 +109,6 @@ const DialogThemSanPham = ({ open, onClose, token, fetchSanPham }) => {
         setProductData({ ...productData, anhSP: files });
     };
 
-    // Hàm lưu sản phẩm
-    const handleSave = () => {
-        console.log('Dữ liệu sản phẩm:', productData);
-        onClose();
-    };
-
     if (!open) return null;
 
     return (
@@ -136,6 +129,7 @@ const DialogThemSanPham = ({ open, onClose, token, fetchSanPham }) => {
                             value={productData.tenSP}
                             onChange={handleChange}
                             placeholder="Nhập tên sản phẩm"
+                            className={errors.tenSP ? 'error' : ''}
                         />
                     </div>
 
@@ -145,6 +139,7 @@ const DialogThemSanPham = ({ open, onClose, token, fetchSanPham }) => {
                             name="idHangSP"
                             value={productData.idHangSP}
                             onChange={handleChange}
+                            className={errors.idHangSP ? 'error' : ''}
                         >
                             <option value="">Chọn hãng</option>
                             {listHang.map((hang) => (
@@ -162,11 +157,16 @@ const DialogThemSanPham = ({ open, onClose, token, fetchSanPham }) => {
                             name="anhSP"
                             multiple
                             onChange={handleImageChange}
+                            className={errors.anhSP ? 'error' : ''}
                         />
-                        {/* .map(file => URL.createObjectURL(file)) */}
                         <div className="image-preview-container">
                             {productData.anhSP.map((src, index) => (
-                                <img key={index} src={URL.createObjectURL(src)} alt={`Ảnh ${index + 1}`} className="image-preview" />
+                                <img
+                                    key={index}
+                                    src={URL.createObjectURL(src)}
+                                    alt={`Ảnh ${index + 1}`}
+                                    className="image-preview"
+                                />
                             ))}
                         </div>
                     </div>

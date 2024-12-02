@@ -2,8 +2,10 @@
 import React, { useEffect, useState } from 'react'
 import './ItemStyle.css'
 
-const ItemSanPham = ({ onClick, tenSP, idHangSP, anhSP }) => {
-
+const ItemSanPham = ({ onClick, _id ,tenSP, idHangSP, anhSP,updateProduct,closeDialogSua }) => {
+    
+    // console.log(anhSP);
+    
 
     const [currentImage, setCurrentImage] = useState(0); // Lưu trữ chỉ mục ảnh hiện tại
 
@@ -19,7 +21,9 @@ const ItemSanPham = ({ onClick, tenSP, idHangSP, anhSP }) => {
     // Hàm xử lý sự kiện click vào nút "Sửa"
     const handleEditClick = (e) => {
         e.stopPropagation(); // Ngừng sự kiện lan truyền khi click vào nút "Sửa"
-        // console.log("Sửa sản phẩm", tenSP);
+        //  console.log("Sửa sản phẩm", tenSP);
+        closeDialogSua()
+        updateProduct({ _id,tenSP, idHangSP, anhSP})
         // Thực hiện các hành động khi click vào nút Sửa
     };
     return (

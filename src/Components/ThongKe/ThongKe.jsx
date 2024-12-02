@@ -58,7 +58,7 @@ const RevenueStatistics = () => {
 
                 // Giả sử API trả về object với cấu trúc { dailyRevenue: [array của doanh thu từng ngày trong tuần] }
                 const data = response.data;
-                console.log("Received Data: ", data);
+                // console.log("Received Data: ", data);
                 setWeeklyRevenueData(data.dailyRevenue||[]);
                 setTotalRevenue(data.totalRevenue||0);
                 

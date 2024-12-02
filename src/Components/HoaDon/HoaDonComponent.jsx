@@ -9,12 +9,17 @@ const HoaDonComponent = ({ token }) => {
 
     const fetchDHCT = async (idDonHang) => {
         try {
-            const res = await fetch(apiUrl + '/chi-tiet-don-hang/' + idDonHang)
+            const res = await fetch(apiUrl + '/chi-tiet-don-hang/' + idDonHang,{
+                method:'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            })
             if (!res.ok) {
                 throw new Error('Fetch failed');
             }
             const data = await res.json()
-            console.log(data.data)
+            // console.log(data.data)
 
             setorderDetails(data.data)
 

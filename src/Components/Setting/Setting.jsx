@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import 'font-awesome/css/font-awesome.min.css';
-import '../Setting/Setting.css'
 export const Setting = () => {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [formData, setFormData] = useState({
