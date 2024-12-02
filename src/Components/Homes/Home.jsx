@@ -1,13 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
+
+import 'font-awesome/css/font-awesome.min.css';
 import '../Homes/home.css';
 import SanPham from '../SanPham/sanPham';
-import LoaiSP from '../LoaiSP/LoaiSP';
+
 import KhachHang from '../KhachHang/KhachHangComponent';
 import DonHangComponent from '../DonHang/DonHangComponent';
 import HoaDonComponent from '../HoaDon/HoaDonComponent';
 import RevenueStatistics from '../ThongKe/ThongKe';
 import ChiTietSPComponent from '../ChiTietSP/ChiTietSPComponent';
+
 import UserInfo from '../Profile/ProfileComponent';
+
+import { Setting } from '../Setting/Setting';
+
 
 const Home = () => {
   const [content, setContent] = useState('');
@@ -78,12 +84,14 @@ const Home = () => {
         return <HoaDonComponent token={token} />;
       case 'thongke':
         return <RevenueStatistics />;
-        case 'profile':
-        return <UserInfo user={resUser}/>;
-      case 'san-pham-chi-tiet':
-        return <ChiTietSPComponent token={token} idSanPham={idSanPham} back={handleContentChange} />;
+
+       case 'san-pham-chi-tiet':
+        return <ChiTietSPComponent token = {token} idSanPham ={ idSanPham} back = {handleContentChange} />;
+        case 'cai-dat':
+        return <Setting token={token}/>;
       default:
-        return <RevenueStatistics />; // Mặc định là thống kê
+        return <RevenueStatistics />; // Đặt Thống kê làm mặc định
+
     }
   };
 
@@ -105,8 +113,10 @@ const Home = () => {
         </div>
         <ul>
           <li onClick={() => handleContentChange('ql-sanpham')}><i className="fas fa-laptop"></i> Quản lý sản phẩm</li>
+
           {/* <li onClick={() => handleContentChange('ql-loaisp')}><i className="fas fa-tags"></i> Quản lý loại sản phẩm</li> */}
           <li onClick={() => handleContentChange('ql-khachhang')}><i className="fas fa-users"></i> Quản lý người dùng</li>
+
           <li onClick={() => handleContentChange('ql-donhang')}><i className="fas fa-users"></i> Quản lý đơn hàng</li>
           <li onClick={() => handleContentChange('ql-hoadon')}><i className="fas fa-users"></i> Quản lý hóa đơn</li>
           <li onClick={() => handleContentChange('thongke')}><i className="fas fa-users"></i> Thống kê</li>

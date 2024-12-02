@@ -30,7 +30,8 @@ const Login = () => {
             )
          
             if(!res.ok) {
-                return alert('Đăng nhập thất bại')
+                const errorData = await res.json();
+                return alert(errorData.message)
             }
             const data = await res.json()
             if(data){

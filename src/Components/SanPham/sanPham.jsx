@@ -3,7 +3,6 @@ import '../SanPham/sanPham.css'
 import ItemSanPham from "./ItemSanPham";
 import { Button } from '@mui/material';
 import ProductDialog from "../DialogThemSP/ThemSP";
-import SuaSP from "../DialogThemSP/SuaSP";
 const SanPham = ({ token, showCT }) => {
 
     const [isOpen, setisOpen] = useState({})
@@ -11,17 +10,9 @@ const SanPham = ({ token, showCT }) => {
     const [listSP, setListSp] = useState([])
     const [branList, setBranlist] = useState([])
     const [searchQuery, setSearchQuery] = useState("");  // Thêm state cho từ khóa tìm kiếm
-
+    const [searchBrand, setsearchBranch] = useState("Hãng Máy")
     const [selectedBrand, setSelectedBrand] = useState(null); // Tên hãng được chọn
     const [openMenu, setOpenMenu] = useState(null); // Quản lý tên của menu đang mở
-
-    // các state để mở dialog sửa
-    const [isOpenDialogUpdate, setisOpenDialogUpdate] = useState(false)
-    const [dataUpdate, setdataUpdate] = useState({})
-
-    // hàm mở dialog sửa sản phẩm
-
-    const closeDialogSua = () => setisOpenDialogUpdate(!isOpenDialogUpdate)
 
 
 
@@ -62,7 +53,7 @@ const SanPham = ({ token, showCT }) => {
                 throw new Error('Fetch failed');
             }
             const data = await res.json();
-            // console.log(data.data);
+            console.log(data.data);
             // Đếm số lượng sản phẩm của mỗi hãng
             const brandCount = {};
 
@@ -96,7 +87,7 @@ const SanPham = ({ token, showCT }) => {
 
         return matchesName && matchesBrand
     });
-    // console.log(selectedBrand)
+    console.log(selectedBrand)
     //chọn các tùy chọn   
     const togglemenu = (menu) => {
         setisOpen((prev) => ({
@@ -149,15 +140,14 @@ const SanPham = ({ token, showCT }) => {
                 </div>
                 <Button variant="contained" color="primary" onClick={handleOpenDialog}>Thêm sản phẩm</Button>
                 {/* Hiển thị ProductDialog khi openDialog = true */}
-                {isOpenDialogUpdate && <SuaSP data={dataUpdate} token={token} fetchSanPham={getListSP} onClose={closeDialogSua} />}
+
                 {openDialog && <ProductDialog open={openDialog} onClose={handleCloseDialog} />}
+
                 {openDialog && <ProductDialog fetchSanPham={getListSP} open={openDialog} onClose={handleCloseDialog} token={token} />}
             </section>
             <h2>Danh sách sản phẩm Laptop</h2>
             {filteredProducts.map((laptop) => (
                 <ItemSanPham
-                    closeDialogSua={closeDialogSua}
-                    updateProduct={(item) => { setdataUpdate(item) }}
                     onClick={() => { showCT(laptop) }}
                     key={laptop._id}
                     {...laptop}
