@@ -19,7 +19,7 @@
     width: 30%;
     background: linear-gradient(135deg, #007bff, #0056b3);
     color: #fff;
-    padding: 20px;
+    padding: 30px;
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
     
   }
@@ -34,6 +34,9 @@
     list-style-type: none;
     padding: 0;
   }
+  .sidebar i {
+    margin-right: 10px; /* Thêm khoảng cách giữa icon và text */
+}
   
   .sidebar ul li {
     padding: 15px;

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import 'font-awesome/css/font-awesome.min.css';
 import '../Homes/home.css';
 import SanPham from '../SanPham/sanPham';
 import LoaiSP from '../LoaiSP/LoaiSP';
@@ -7,6 +8,7 @@ import DonHangComponent from '../DonHang/DonHangComponent';
 import HoaDonComponent from '../HoaDon/HoaDonComponent';
 import RevenueStatistics from '../ThongKe/ThongKe';
 import ChiTietSPComponent from '../ChiTietSP/ChiTietSPComponent';
+import { Setting } from '../Setting/Setting';
 
 const Home = () => {
   const [content, setContent] = useState('');
@@ -39,8 +41,10 @@ const Home = () => {
         return <HoaDonComponent token={token} />;
       case 'thongke':
         return <RevenueStatistics />;
-        case 'san-pham-chi-tiet':
+       case 'san-pham-chi-tiet':
         return <ChiTietSPComponent token = {token} idSanPham ={ idSanPham} back = {handleContentChange} />;
+        case 'cai-dat':
+        return <Setting />;
       default:
         return <RevenueStatistics />; // Đặt Thống kê làm mặc định
     }
