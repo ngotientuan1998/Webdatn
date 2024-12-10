@@ -1,105 +1,134 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import './HoaDonStyle.css';
 import DialogDonHangCT from '../DonHang/DialogDonHangCT';
+
 const HoaDonComponent = ({ token }) => {
-    const apiUrl = process.env.REACT_APP_API_URL
-    const [listHoaDon, setListHoaDon] = useState([])
-    const [dialogOpen, setDialogOpen] = useState(false);
-    const [orderDetails, setorderDetails] = useState([])
+  const apiUrl = process.env.REACT_APP_API_URL;
+  const [listHoaDon, setListHoaDon] = useState([]);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [orderDetails, setOrderDetails] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
-    const fetchDHCT = async (idDonHang) => {
-        try {
-            const res = await fetch(apiUrl + '/chi-tiet-don-hang/' + idDonHang,{
-                method:'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                }
-            })
-            if (!res.ok) {
-                throw new Error('Fetch failed');
-            }
-            const data = await res.json()
-            // console.log(data.data)
-
-            setorderDetails(data.data)
-
-        } catch (error) {
-            console.log(error.message);
-            alert(error.message)
-        }
+  const fetchDHCT = async (idDonHang) => {
+    try {
+      const res = await fetch(apiUrl + '/chi-tiet-don-hang/' + idDonHang, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+      if (!res.ok) {
+        throw new Error('Fetch failed');
+      }
+      const data = await res.json();
+      setOrderDetails(data.data);
+    } catch (error) {
+      console.log(error.message);
+      alert(error.message);
     }
+  };
 
+  const handleOpenDialog = () => {
+    setDialogOpen(true);
+  };
 
+  const handleCloseDialog = () => {
+    setDialogOpen(false);
+  };
 
-    const handleOpenDialog = () => {
-        setDialogOpen(true);
-    };
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value.toLowerCase());
+  };
 
-    const handleCloseDialog = () => {
-        setDialogOpen(false);
-    };
-
-    //lấy dl háo đơn
-    useEffect(() => {
-        const fetchHoaDon = async () => {
-            try {
-                const res = await fetch(apiUrl + '/hoa-don/admin', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`,  // Thêm token vào header
-                    }
-                })
-                if (!res.ok) {
-                    throw new Error('Fetch failed');
-                }
-                const data = await res.json()
-                
-                setListHoaDon(data.data)
-            } catch (error) {
-                console.log(error.message);
-                alert(error.message)
-
-            }
-
+  useEffect(() => {
+    const fetchHoaDon = async () => {
+      try {
+        const res = await fetch(apiUrl + '/hoa-don/admin', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+        if (!res.ok) {
+          throw new Error('Fetch failed');
         }
-        fetchHoaDon()
-    }, [])
-    return (
-        <div className="invoice-management">
-            <h1>Quản lý Hóa Đơn</h1>
-            {listHoaDon.map((invoice) => (
-                <div key={invoice._id} className="invoice-item">
-                    <div className="invoice-item-details">
-                        <div className="invoice-id">Mã hóa đơn: {invoice._id}</div>
-                        <div className="invoice-customer">Khách hàng: {invoice.idDonHang.idKhachHang.HoTen} - SĐT: {invoice.idDonHang.idKhachHang.Sdt}</div>
-                        {
-                            invoice.idDonHang.idAdmin && (
-                                <div className="invoice-customer">Admin: {invoice.idDonHang.idAdmin.HoTen} - SĐT: {invoice.idDonHang.idKhachHang.Sdt}</div>
-                            )
-                        }
-                        <div className="invoice-date">Ngày nhận hàng: {invoice.NgayNhanHang}</div>
+        const data = await res.json();
+        setListHoaDon(data.data);
+      } catch (error) {
+        console.log(error.message);
+        alert(error.message);
+      }
+    };
+    fetchHoaDon();
+  }, [token]);
 
-                        <div className="invoice-total">Tổng tiền: {invoice.TongTien.toLocaleString()} VND</div>
-                    </div>
-                    <div className="invoice-buttons">
-                        <button onClick={() => {
-                            fetchDHCT(invoice.idDonHang._id)
-                            handleOpenDialog()
-                        }} className="button" >
-                            Xem chi tiết
-                        </button>
+  const filteredInvoices = listHoaDon.filter((invoice) => {
+    const customerName = invoice.idDonHang.idKhachHang.HoTen.toLowerCase();
+    const adminName = invoice.idDonHang.idAdmin ? invoice.idDonHang.idAdmin.HoTen.toLowerCase() : '';
+    return customerName.includes(searchQuery) || adminName.includes(searchQuery);
+  });
 
-                    </div>
-                </div>
-            ))}
-            <DialogDonHangCT
-                open={dialogOpen}
-                onClose={handleCloseDialog}
-                orderDetails={orderDetails}
-            />
-        </div>
-    )
-}
+  return (
+    <div className="invoice-management">
+      <h1>Quản lý Hóa Đơn</h1>
 
-export default HoaDonComponent
+      {/* Tìm kiếm */}
+      <div className="search-container">
+        <input
+          type="text"
+          placeholder="Tìm kiếm theo tên khách hàng hoặc admin"
+          value={searchQuery}
+          onChange={handleSearchChange}
+          className="search-input"
+        />
+      </div>
+
+      {/* Bảng Hóa Đơn */}
+      <table className="invoice-table">
+        <thead>
+          <tr>
+            <th>STT</th>
+            <th>Mã hóa đơn</th>
+            <th>Khách hàng</th>
+            <th>Admin</th>
+            <th>Ngày nhận hàng</th>
+            <th>Tổng tiền</th>
+            <th>Chi tiết</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredInvoices.map((invoice,index) => (
+            <tr key={invoice._id}>
+                <td>{index+1}</td>
+              <td>{invoice._id}</td>
+              <td>{invoice.idDonHang.idKhachHang.HoTen}</td>
+              <td>{invoice.idDonHang.idAdmin ? invoice.idDonHang.idAdmin.HoTen : 'N/A'}</td>
+              <td>{invoice.NgayNhanHang}</td>
+              <td>{invoice.TongTien.toLocaleString()} VND</td>
+              <td>
+                <button
+                  onClick={() => {
+                    fetchDHCT(invoice.idDonHang._id);
+                    handleOpenDialog();
+                  }}
+                  className="button"
+                >
+                  Xem chi tiết
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <DialogDonHangCT
+        open={dialogOpen}
+        onClose={handleCloseDialog}
+        orderDetails={orderDetails}
+      />
+    </div>
+  );
+};
+
+export default HoaDonComponent;

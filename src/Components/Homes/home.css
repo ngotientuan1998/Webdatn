@@ -10,7 +10,7 @@
 
 /* Thanh công cụ bên trái (Sidebar) */
 .sidebar {
-  width: 30%;
+  width: 18%;
   height: 100vh;
   background: linear-gradient(135deg, #007bff, #0056b3);
   color: #fff;
@@ -64,7 +64,7 @@
 
 /* Nội dung bên phải */
 .content {
-  width: 70%;
+  flex: 1;
   padding: 20px;
   overflow-y: auto;
   height: 100%; /* Đảm bảo phần content có chiều cao đầy đủ để cuộn */

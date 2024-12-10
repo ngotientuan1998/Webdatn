@@ -9,7 +9,7 @@ import DonHangComponent from '../DonHang/DonHangComponent';
 import HoaDonComponent from '../HoaDon/HoaDonComponent';
 import RevenueStatistics from '../ThongKe/ThongKe';
 import ChiTietSPComponent from '../ChiTietSP/ChiTietSPComponent';
-
+import ChatsComponent from '../Chat/ChatsComonent'
 import UserInfo from '../Profile/ProfileComponent';
 
 import { Setting } from '../Setting/Setting';
@@ -74,8 +74,8 @@ const Home = () => {
     switch (content) {
       case 'ql-sanpham':
         return <SanPham token={token} showCT={handleProductClick} />;
-      // case 'ql-loaisp':
-      //   return <LoaiSP />;
+      case 'ql-chat':
+        return <ChatsComponent/>;
       case 'ql-khachhang':
         return <KhachHang token={token} />;
       case 'ql-donhang':
@@ -114,13 +114,13 @@ const Home = () => {
         <ul>
           <li onClick={() => handleContentChange('ql-sanpham')}><i className="fas fa-laptop"></i> Quản lý sản phẩm</li>
 
-          {/* <li onClick={() => handleContentChange('ql-loaisp')}><i className="fas fa-tags"></i> Quản lý loại sản phẩm</li> */}
+          <li onClick={() => handleContentChange('ql-chat')}><i className="fas fa-tags"></i> Tin Nhắn</li>
           <li onClick={() => handleContentChange('ql-khachhang')}><i className="fas fa-users"></i> Quản lý người dùng</li>
 
           <li onClick={() => handleContentChange('ql-donhang')}><i className="fas fa-users"></i> Quản lý đơn hàng</li>
           <li onClick={() => handleContentChange('ql-hoadon')}><i className="fas fa-users"></i> Quản lý hóa đơn</li>
           <li onClick={() => handleContentChange('thongke')}><i className="fas fa-users"></i> Thống kê</li>
-          <li onClick={() => handleContentChange('profile')}><i className="fas fa-cogs"></i> Tôi</li>
+          {/* <li onClick={() => handleContentChange('profile')}><i className="fas fa-cogs"></i> Tôi</li> */}
           <li onClick={() => handleContentChange('cai-dat')}><i className="fas fa-cogs"></i> Cài đặt</li>
         </ul>
       </div>
