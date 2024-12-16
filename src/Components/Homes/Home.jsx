@@ -10,9 +10,10 @@ import HoaDonComponent from '../HoaDon/HoaDonComponent';
 import RevenueStatistics from '../ThongKe/ThongKe';
 import ChiTietSPComponent from '../ChiTietSP/ChiTietSPComponent';
 import ChatsComponent from '../Chat/ChatsComonent'
-import UserInfo from '../Profile/ProfileComponent';
+// import UserInfo from '../Profile/ProfileComponent';
 
 import { Setting } from '../Setting/Setting';
+import DanhGiaTable from '../DanhGia/DanhGiaComponent';
 
 
 const Home = () => {
@@ -44,7 +45,7 @@ const Home = () => {
   // Loại bỏ thuộc tính css của body khi hiển thị component này
   useEffect(() => {
     document.body.style.cssText = `display: contents;`;
-    
+
     const handleContentScroll = () => {
       if (!isMobileOrTablet) return; // Nếu không phải mobile/tablet thì không thực hiện gì
 
@@ -75,20 +76,22 @@ const Home = () => {
       case 'ql-sanpham':
         return <SanPham token={token} showCT={handleProductClick} />;
       case 'ql-chat':
-        return <ChatsComponent/>;
+        return <ChatsComponent />;
       case 'ql-khachhang':
         return <KhachHang token={token} />;
       case 'ql-donhang':
         return <DonHangComponent token={token} />;
       case 'ql-hoadon':
         return <HoaDonComponent token={token} />;
+      case 'ql-danhgia':
+        return <DanhGiaTable token={token} />;
       case 'thongke':
         return <RevenueStatistics />;
 
-       case 'san-pham-chi-tiet':
-        return <ChiTietSPComponent token = {token} idSanPham ={ idSanPham} back = {handleContentChange} />;
-        case 'cai-dat':
-        return <Setting token={token}/>;
+      case 'san-pham-chi-tiet':
+        return <ChiTietSPComponent token={token} idSanPham={idSanPham} back={handleContentChange} />;
+      case 'cai-dat':
+        return <Setting token={token} />;
       default:
         return <RevenueStatistics />; // Đặt Thống kê làm mặc định
 
@@ -112,24 +115,21 @@ const Home = () => {
           <h3>Xin chào Admin {resUser.HoTen}</h3>
         </div>
         <ul>
-          <li onClick={() => handleContentChange('ql-sanpham')}><i className="fas fa-laptop"></i> Quản lý sản phẩm</li>
-
-          <li onClick={() => handleContentChange('ql-chat')}><i className="fas fa-tags"></i> Tin Nhắn</li>
-          <li onClick={() => handleContentChange('ql-khachhang')}><i className="fas fa-users"></i> Quản lý người dùng</li>
-
-          <li onClick={() => handleContentChange('ql-donhang')}><i className="fas fa-users"></i> Quản lý đơn hàng</li>
-          <li onClick={() => handleContentChange('ql-hoadon')}><i className="fas fa-users"></i> Quản lý hóa đơn</li>
+          <li onClick={() => handleContentChange('ql-sanpham')}><i className="fas fa-laptop"></i> Sản phẩm</li>
+          <li onClick={() => handleContentChange('ql-khachhang')}><i className="fas fa-users"></i> Người dùng</li>
+          <li onClick={() => handleContentChange('ql-donhang')}><i className="fas fa-users"></i>Đơn hàng</li>
+          <li onClick={() => handleContentChange('ql-hoadon')}><i className="fas fa-users"></i>Hóa đơn</li>
           <li onClick={() => handleContentChange('thongke')}><i className="fas fa-users"></i> Thống kê</li>
-          {/* <li onClick={() => handleContentChange('profile')}><i className="fas fa-cogs"></i> Tôi</li> */}
+          <li onClick={() => handleContentChange('ql-chat')}><i className="fas fa-tags"></i> Tin Nhắn</li>
+          <li onClick={() => handleContentChange('ql-danhgia')}><i className="fas fa-tags"></i>Đánh giá</li>
           <li onClick={() => handleContentChange('cai-dat')}><i className="fas fa-cogs"></i> Cài đặt</li>
         </ul>
       </div>
-
       <div className="content" ref={contentRef}>
         {renderContent()}
       </div>
 
-     
+
     </div>
   );
 };

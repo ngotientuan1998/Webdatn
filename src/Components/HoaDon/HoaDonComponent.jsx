@@ -90,8 +90,8 @@ const HoaDonComponent = ({ token }) => {
           <tr>
             <th>STT</th>
             <th>Mã hóa đơn</th>
-            <th>Khách hàng</th>
-            <th>Admin</th>
+            <th>Khách hàng <br/> (SĐT)</th>
+            <th>Admin <br/> (SĐT)</th>
             <th>Ngày nhận hàng</th>
             <th>Tổng tiền</th>
             <th>Chi tiết</th>
@@ -102,8 +102,8 @@ const HoaDonComponent = ({ token }) => {
             <tr key={invoice._id}>
                 <td>{index+1}</td>
               <td>{invoice._id}</td>
-              <td>{invoice.idDonHang.idKhachHang.HoTen}</td>
-              <td>{invoice.idDonHang.idAdmin ? invoice.idDonHang.idAdmin.HoTen : 'N/A'}</td>
+              <td>{invoice.idDonHang.idKhachHang.HoTen}<br/> ({invoice.idDonHang.idKhachHang.Sdt})</td>
+              <td>{invoice.idDonHang.idAdmin?.HoTen || 'N/A'}<br/> ({invoice.idDonHang.idAdmin?.Sdt ||'N/A'})</td>
               <td>{invoice.NgayNhanHang}</td>
               <td>{invoice.TongTien.toLocaleString()} VND</td>
               <td>

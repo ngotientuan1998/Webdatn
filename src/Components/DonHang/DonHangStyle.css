@@ -5,23 +5,25 @@
 
 .search-container {
   margin-bottom: 10px;
+  width: 100%;
+  display: flex;
+  align-items: 'center';
+  gap: '10px'
 }
 
 .search-input {
   padding: 8px;
-  width: 250px;
-  margin-right: 20px;
+  width: 80%;
   border-radius: 4px;
   border: 1px solid #ddd;
 }
-
 .filter-container {
   display: inline-block;
 }
 
 .order-table {
   width: 90%;
-  border-collapse: collapse;
+  
   margin-top: 10px;
 }
 
@@ -34,7 +36,7 @@
 
 .order-table th {
   background-color: #f4f4f4;
-  font-weight: bold;
+  
 }
 
 .order-table td {
@@ -48,7 +50,7 @@
 }
 
 .order-table td button {
-  padding: 7px 14px;
+  padding:5px;
   font-size: 12px;
   border-radius: 4px;
   border: none;
@@ -110,10 +112,10 @@
 
 .order-table td:nth-child(6),
 .order-table th:nth-child(6) {
-  width: 100px; /* Cột trạng thái */
+  width: 80px; /* Cột trạng thái */
 }
 
 .order-table td:nth-child(7),
 .order-table th:nth-child(7) {
-  width: 150px; /* Cột hành động */
+  width: 100px; /* Cột hành động */
 }

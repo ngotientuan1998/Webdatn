@@ -18,7 +18,22 @@ const DonHangComponent = ({ token }) => {
   const handleCloseDialog = () => {
     setDialogOpen(false);
   };
-
+  const formatDate = (isoDate) => {
+    const date = new Date(isoDate);
+  
+    // Định dạng ngày, tháng, năm
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+  
+    // Định dạng giờ, phút, giây
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+  
+    // Kết hợp
+    return `${day}/${month}/${year}\ngiờ: ${hours}:${minutes}:${seconds}`;
+  };
   const fetchDHCT = async (idDonHang) => {
     try {
       const res = await fetch(apiUrl + '/chi-tiet-don-hang/' + idDonHang, {
@@ -185,16 +200,17 @@ const DonHangComponent = ({ token }) => {
 
 
 
+
       <table className="order-table">
         <thead>
           <tr>
             <th>STT</th>
             <th>Mã đơn</th>
-            <th>Khách hàng</th>
-            <th>Admin</th>
-            <th>Ngày</th>
+            <th>Khách hàng <br /> (SĐT)</th>
+            <th>Admin <br /> (SĐT)</th>
+            <th>Ngày đặt hàng <br /> (Địa chỉ)</th>
             <th>Trạng thái</th>
-            <th>Tổng tiền</th>
+            <th>Tổng tiền (VND)</th>
             <th>Hành động</th>
           </tr>
         </thead>
@@ -210,11 +226,11 @@ const DonHangComponent = ({ token }) => {
             >
               <td>{index + 1}</td>
               <td>{order._id}</td>
-              <td>{order.idKhachHang?.HoTen}</td>
-              <td>{order.idAdmin?.HoTen || 'N/A'}</td>
-              <td>{order.NgayDatHang}</td>
+              <td>{order.idKhachHang?.HoTen} <br /> <span className="username">({order.idKhachHang.Sdt})</span></td>
+              <td>{order.idAdmin?.HoTen || 'N/A'} <br /> <span className="username">({order.idAdmin?.Sdt || 'N/A'})</span> </td>
+              <td>{formatDate(order.NgayDatHang)} <br /> <span className="username">({order.idKhachHang?.DiaChi || 'N/A'})</span> </td>
               <td>{order.TrangThai}</td>
-              <td>{order.TongTien}</td>
+              <td>{order.TongTien}VND</td>
               <td>
                 {order.TrangThai === 'Chờ duyệt' && (
                   <button

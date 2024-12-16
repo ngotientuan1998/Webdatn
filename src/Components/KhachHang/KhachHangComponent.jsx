@@ -72,9 +72,7 @@ const KhachHangComponent = ({ token }) => {
     <div className="item-KhachHang">
       <h1>Danh sách người dùng</h1>
       <div style={{ marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-        <button className="add-user-button" onClick={onClose}>
-          Thêm User
-        </button>
+        
         <input
           type="text"
           className="search-input"
@@ -92,13 +90,16 @@ const KhachHangComponent = ({ token }) => {
           <option value="admin">Admin</option>
           <option value="Khách hàng">Khách hàng</option>
         </select>
+        <button className="add-user-button" onClick={onClose}>
+          Thêm User
+        </button>
       </div>
       {isOpenDialogThem && <DialogThemUser token={token} onClose={onClose} fetchKhachHang={fetchKhachHang} />}
       <div className="customer-list">
         <table className="customer-table">
           <thead>
             <tr>
-              <th>#</th>
+              <th>STT</th>
               <th>Avatar</th>
               <th>Họ tên (Tên người dùng)</th>
               <th>Tuổi</th>
@@ -106,7 +107,6 @@ const KhachHangComponent = ({ token }) => {
               <th>SĐT</th>
               <th>Địa chỉ</th>
               <th>Vai trò</th>
-              <th>Hành động</th>
             </tr>
           </thead>
           <tbody>
@@ -119,23 +119,19 @@ const KhachHangComponent = ({ token }) => {
                       khachhang.Avatar ||
                       'https://www.pngkit.com/png/full/115-1150342_user-avatar-icon-iconos-de-mujeres-a-color.png'
                     }
-                    alt={`${khachhang.HoTen}'s avatar`}
+                    // alt={`avatar`}
                     className="avatar"
                     style={{ width: '30px', height: '30px', borderRadius: '50%' }}
                   />
                 </td>
                 <td>
-                  {khachhang.HoTen} <span className="username">({khachhang.UserName})</span>
+                  {khachhang.HoTen}  <span className="username">({khachhang.UserName})</span>
                 </td>
                 <td>{khachhang.Tuoi || 'Không có'}</td>
                 <td>{khachhang.Email}</td>
                 <td>{khachhang.Sdt || 'Không có'}</td>
                 <td>{khachhang.DiaChi || 'Không có'}</td>
                 <td>{khachhang.Role}</td>
-                <td>
-                  <button className="edit-button">Sửa</button>
-                  <button className="delete-button">Xóa</button>
-                </td>
               </tr>
             ))}
           </tbody>

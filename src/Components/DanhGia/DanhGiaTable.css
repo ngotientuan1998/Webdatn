@@ -1,0 +1,124 @@
+/* DanhGiaTable.css */
+
+.danh-gia-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.filter-container {
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.filter-container label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.danh-gia-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 12px;
+  /* Chữ nhỏ */
+  table-layout: fixed;
+  /* Kích thước cột cố định */
+}
+
+.danh-gia-table th,
+.danh-gia-table td {
+  border: 1px solid #ddd;
+  padding: 5px;
+  /* Khoảng cách nội dung */
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* Nội dung dài quá sẽ thành ... */
+  white-space: nowrap;
+  /* Không xuống dòng */
+}
+
+.danh-gia-table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+/* Cột nội dung rộng nhất */
+.danh-gia-table th:nth-child(4),
+.danh-gia-table td:nth-child(4) {
+  width: 40%;
+  white-space: nowrap;
+  /* Không xuống dòng */
+}
+
+/* Kích thước các cột khác */
+.danh-gia-table th:nth-child(1),
+.danh-gia-table td:nth-child(1) {
+  width: 2%;
+}
+
+.danh-gia-table th:nth-child(2),
+.danh-gia-table td:nth-child(2) {
+  width: 10%;
+}
+
+.danh-gia-table th:nth-child(3),
+.danh-gia-table td:nth-child(3) {
+  width: 3%;
+}
+
+.danh-gia-table th:nth-child(5),
+.danh-gia-table td:nth-child(5) {
+  width: 20%;
+}
+
+.danh-gia-table th:nth-child(6),
+.danh-gia-table td:nth-child(6) {
+  width: 10%;
+}
+
+.image {
+  width: 50px !important;
+  height: 50px !important;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-left: 5px;
+}
+
+.button-chi-tiet {
+  display: block;
+  margin: 0 auto;
+  /* Căn giữa nút button */
+  padding: 5px 10px;
+  font-size: 12px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.button-chi-tiet:hover {
+  background-color: #0056b3;
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+/* Tooltip cho nội dung dài */
+.expandable-content {
+  cursor: pointer;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.expandable-content.expanded {
+  white-space: normal;
+  /* Cho phép xuống dòng khi mở rộng */
+  overflow: visible;
+}

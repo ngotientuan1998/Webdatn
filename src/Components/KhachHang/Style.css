@@ -2,7 +2,7 @@
 .item-KhachHang {
   margin: 20px;
   font-family: Arial, sans-serif;
-  font-size: 12px; /* Chữ nhỏ */
+  font-size: 14px; /* Chữ nhỏ */
 }
 
 /* Tiêu đề */
@@ -17,6 +17,7 @@
   padding: 5px 10px;
   margin-bottom: 10px;
   cursor: pointer;
+  background-color: #007BFF;
 }
 
 /* Bảng người dùng */
@@ -31,7 +32,7 @@
 .customer-table th, 
 .customer-table td {
   border: 1px solid #ddd; /* Viền ô */
-  padding: 2px 5px; /* Giảm padding để chiều cao nhỏ hơn */
+  padding: 5px 5px; /* Giảm padding để chiều cao nhỏ hơn */
   text-align: left; /* Căn trái */
   line-height: 1; /* Giảm line-height để giảm chiều cao dòng */
 }
@@ -61,7 +62,7 @@
   cursor: pointer;
 }
 
-.edit-button {
+/* .edit-button {
   background-color: #3ee2ff;
   border: 1px solid #bee5eb;
   color: #0c5460;
@@ -71,7 +72,7 @@
   background-color: #f18e96;
   border: 1px solid #f5c6cb;
   color: #721c24;
-}
+} */
 
 /* Dòng khi di chuột qua */
 .customer-table tr:hover {

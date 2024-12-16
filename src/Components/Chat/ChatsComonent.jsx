@@ -14,6 +14,7 @@ const AdminChat = () => {
   const user = localStorage.getItem('user');
   const resUser = JSON.parse(user);
   const token = resUser.AccessToken;
+  
   // console.log(resUser);
 
   useEffect(() => {

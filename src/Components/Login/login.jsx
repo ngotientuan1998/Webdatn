@@ -21,56 +21,65 @@ const Login = () => {
         if (UserName === "" || Password === "") return alert('Không để trống')
         try {
             // console.log("đã vào 1")
-            const res = await fetch(apiUrl+`/auth/login/admin`,
+            const res = await fetch(apiUrl + `/auth/login/admin`,
                 {
                     method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({UserName,Password})
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ UserName, Password })
                 }
             )
-         
-            if(!res.ok) {
+
+            if (!res.ok) {
                 const errorData = await res.json();
                 return alert(errorData.message)
             }
             const data = await res.json()
-            if(data){
+            if (data) {
                 // localStorage.setItem('token',data.AccessToken),
-                localStorage.setItem('user',JSON.stringify(data))
+                localStorage.setItem('user', JSON.stringify(data))
             }
             // console.log(data);
-            
+
             alert(data.message || 'Đăng nhập thành công')
             navigate('/home');
         } catch (error) {
             alert(error.message)
-             console.log(error.message);
-            
+            console.log(error.message);
+
         }
     }
     return (
-        <div >
+        <div>
             <form action="" id="form-login">
-                <h1 className="form-heading">Login</h1>
+                <h1 className="form-heading">Đăng nhập</h1>
                 <div className="form-group">
-                    <FaUser />
-                    <input type="text" value={UserName} onChange={txt => setUserName(txt.target.value)} className="form-input" placeholder="Tên đăng nhập" />
+                    <div className="input-wrapper">
+                        <input
+                            type="text"
+                            value={UserName}
+                            onChange={(txt) => setUserName(txt.target.value)}
+                            className="form-input"
+                            placeholder="Tên đăng nhập"
+                        />
+                        <FaUser className="input-icon" />
+                    </div>
                 </div>
                 <div className="form-group">
-
-                    <input type={eye ? "text" : "password"} value={Password} onChange={txt => setPassword(txt.target.value)} className="form-input" placeholder="Mật khẩu" />
-                    <div>
-                        {eye ? (
-                            <FaEye onClick={handleClick} />
-                        ) : (
-                            <FaEyeSlash onClick={handleClick}></FaEyeSlash>
-                        )}
+                    <div className="input-wrapper">
+                        <input
+                            type={eye ? 'text' : 'password'}
+                            value={Password}
+                            onChange={txt => setPassword(txt.target.value)}
+                            className="form-input"
+                            placeholder="Mật khẩu"
+                        />
+                        <span className="icon" onClick={handleClick}>
+                            {eye ? <FaEyeSlash className='input-icon' /> : <FaEye className='input-icon' />}
+                        </span>
                     </div>
-
                 </div>
                 <div className="button">
                     <input type="button" value="Đăng nhập" className="form-submit" onClick={handleHome} />
-                    <input type="button" value="Đăng ký" className="form-submit" onClick={handleSignup} />
                 </div>
             </form>
         </div>
