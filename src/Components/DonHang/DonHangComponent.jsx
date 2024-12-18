@@ -162,10 +162,10 @@ const DonHangComponent = ({ token }) => {
     })
     .filter(order => {
       const searchTerm = searchQuery.toLowerCase();
-      return (
-        order.idKhachHang?.HoTen.toLowerCase().includes(searchTerm) ||
-        order.idAdmin?.HoTen.toLowerCase().includes(searchTerm)
-      );
+      const khachHangHoTen = order.idKhachHang?.HoTen ? order.idKhachHang.HoTen.toLowerCase() : '';
+      const adminHoTen = order.idAdmin?.HoTen ? order.idAdmin.HoTen.toLowerCase() : '';
+      
+      return khachHangHoTen.includes(searchTerm) || adminHoTen.includes(searchTerm);
     });
 
   return (
@@ -226,8 +226,8 @@ const DonHangComponent = ({ token }) => {
             >
               <td>{index + 1}</td>
               <td>{order._id}</td>
-              <td>{order.idKhachHang?.HoTen} <br /> <span className="username">({order.idKhachHang.Sdt})</span></td>
-              <td>{order.idAdmin?.HoTen || 'N/A'} <br /> <span className="username">({order.idAdmin?.Sdt || 'N/A'})</span> </td>
+              <td>{order.idKhachHang?.HoTen} </td>
+              <td>{order.idAdmin?.HoTen || 'N/A'} </td>
               <td>{formatDate(order.NgayDatHang)} <br /> <span className="username">({order.idKhachHang?.DiaChi || 'N/A'})</span> </td>
               <td>{order.TrangThai}</td>
               <td>{order.TongTien}VND</td>

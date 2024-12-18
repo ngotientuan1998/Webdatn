@@ -1,18 +1,17 @@
 import { useEffect, useState } from "react";
 import '../SanPham/sanPham.css';
-import { Button } from '@mui/material';
+
 import ProductDialog from "../DialogThemSP/ThemSP";
 import SuaSP from "../DialogThemSP/SuaSP";
 
 const SanPham = ({ token, showCT }) => {
 
-    const [isOpen, setisOpen] = useState({});
     const [openDialog, setOpenDialog] = useState(false);
     const [listSP, setListSp] = useState([]);
     const [branList, setBranlist] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");  // Thêm state cho từ khóa tìm kiếm
     const [selectedBrand, setSelectedBrand] = useState(""); // Tên hãng được chọn
-    const [openMenu, setOpenMenu] = useState(null); // Quản lý tên của menu đang mở
+
 
     const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -114,8 +113,9 @@ const SanPham = ({ token, showCT }) => {
                             <td>{laptop.tenSP}</td>
                             <td>{laptop.idHangSP.TenHang}</td>
                             <td>
-                                {laptop.anhSP.map((anh) => (
+                                {laptop.anhSP.map((anh,index) => (
                                     <img 
+                                    key={index}
                                         src={process.env.REACT_APP_API_URL + anh} 
                                         alt={laptop.tenSP} 
                                         className="product-image" 
