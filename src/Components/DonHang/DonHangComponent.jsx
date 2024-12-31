@@ -20,17 +20,17 @@ const DonHangComponent = ({ token }) => {
   };
   const formatDate = (isoDate) => {
     const date = new Date(isoDate);
-  
+
     // Định dạng ngày, tháng, năm
     const day = String(date.getDate()).padStart(2, '0');
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const year = date.getFullYear();
-  
+
     // Định dạng giờ, phút, giây
     const hours = String(date.getHours()).padStart(2, '0');
     const minutes = String(date.getMinutes()).padStart(2, '0');
     const seconds = String(date.getSeconds()).padStart(2, '0');
-  
+
     // Kết hợp
     return `${day}/${month}/${year}\ngiờ: ${hours}:${minutes}:${seconds}`;
   };
@@ -164,7 +164,7 @@ const DonHangComponent = ({ token }) => {
       const searchTerm = searchQuery.toLowerCase();
       const khachHangHoTen = order.idKhachHang?.HoTen ? order.idKhachHang.HoTen.toLowerCase() : '';
       const adminHoTen = order.idAdmin?.HoTen ? order.idAdmin.HoTen.toLowerCase() : '';
-      
+
       return khachHangHoTen.includes(searchTerm) || adminHoTen.includes(searchTerm);
     });
 
@@ -218,10 +218,6 @@ const DonHangComponent = ({ token }) => {
           {filteredOrders.map((order, index) => (
             <tr
               key={order._id}
-              onClick={() => {
-                fetchDHCT(order._id);
-                handleOpenDialog();
-              }}
               className="order-row"
             >
               <td>{index + 1}</td>
@@ -232,6 +228,10 @@ const DonHangComponent = ({ token }) => {
               <td>{order.TrangThai}</td>
               <td>{order.TongTien}VND</td>
               <td>
+                <button className='button' onClick={() => {
+                  fetchDHCT(order._id);
+                  handleOpenDialog();
+                }}>Chi Tiết</button>
                 {order.TrangThai === 'Chờ duyệt' && (
                   <button
                     onClick={(event) => {

@@ -14,6 +14,7 @@ import ChatsComponent from '../Chat/ChatsComonent'
 
 import { Setting } from '../Setting/Setting';
 import DanhGiaTable from '../DanhGia/DanhGiaComponent';
+import DoiTra_HoanTienComponent from '../Doitra_HoanTien/DoiTra_HoanTienComponent';
 
 
 const Home = () => {
@@ -87,6 +88,8 @@ const Home = () => {
         return <DanhGiaTable token={token} />;
       case 'thongke':
         return <RevenueStatistics />;
+      case 'doitra-hoantien':
+        return <DoiTra_HoanTienComponent token = {token}/>;
 
       case 'san-pham-chi-tiet':
         return <ChiTietSPComponent token={token} idSanPham={idSanPham} back={handleContentChange} />;
@@ -112,7 +115,7 @@ const Home = () => {
     <div className="home">
       <div className={`sidebar ${isSidebarVisible ? 'visible' : 'hidden'}`}>
         <div className='profile'>
-          <h3>Xin chào Admin {resUser.HoTen}</h3>
+          <h4>Xin chào {resUser.HoTen}</h4>
         </div>
         <ul>
           <li onClick={() => handleContentChange('ql-sanpham')}><i className="fas fa-laptop"></i> Sản phẩm</li>
@@ -122,6 +125,7 @@ const Home = () => {
           <li onClick={() => handleContentChange('thongke')}><i className="fas fa-users"></i> Thống kê</li>
           <li onClick={() => handleContentChange('ql-chat')}><i className="fas fa-tags"></i> Tin Nhắn</li>
           <li onClick={() => handleContentChange('ql-danhgia')}><i className="fas fa-tags"></i>Đánh giá</li>
+          <li onClick={() => handleContentChange('doitra-hoantien')}><i className="fas fa-cogs"></i> Đổi trả & hoàn tiền</li>
           <li onClick={() => handleContentChange('cai-dat')}><i className="fas fa-cogs"></i> Cài đặt</li>
         </ul>
       </div>
