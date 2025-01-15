@@ -145,7 +145,7 @@ const DoiTra_HoanTienComponent = ({ token }) => {
                                         item.HinhAnhMinhHoa.map((url, index) => (
                                             <img
                                                 key={index}
-                                                src={url}
+                                                src={process.env.REACT_APP_API_URL+url}
 
                                                 style={{ width: '30px', height: '30px', marginRight: '5px' }}
                                             />

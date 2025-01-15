@@ -22,46 +22,32 @@ ChartJS.register(
 
 const RevenueStatistics = () => {
     const [currentDate, setCurrentDate] = useState(new Date());
-    const [weeklyRevenueData, setWeeklyRevenueData] = useState(null); // Data từ API
-    const [totalRevenue, setTotalRevenue] = useState(0); // Tổng doanh thu
-    const apiUrl = process.env.REACT_APP_API_URL
-    //hàm lấy ngày tháng năm hiện tại
-    // function getdaynow() {
-    //     const today = new Date();
-    //     const day = today.getDate(); // Lấy ngày
-    //     const month = today.getMonth() + 1; // Lấy tháng (bắt đầu từ 0, nên cộng thêm 1)
-    //     const year = today.getFullYear(); // Lấy năm
-    //     const daysOfWeek = ["Chủ nhật", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7"];
-    //     const dayOfWeek = daysOfWeek[today.getDay()]; // Lấy tên thứ trong tuần
-    //     // Trả về ngày dưới dạng chuỗi "Ngày/Tháng/Năm"
-    //     return `${day}/${month}/${year}`;
-    // }
-    // Hàm để tính toán ngày bắt đầu và kết thúc của tuần hiện tại
+    const [weeklyRevenueData, setWeeklyRevenueData] = useState(null);
+    const [totalRevenue, setTotalRevenue] = useState(0);
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+    const [totalRevenueRange, setTotalRevenueRange] = useState(0);
+    const apiUrl = process.env.REACT_APP_API_URL;
+
     const getWeekRange = (date) => {
         const startOfWeek = new Date(date);
-        startOfWeek.setDate(date.getDate() - date.getDay() + 1); // Bắt đầu tuần (Thứ Hai)
+        startOfWeek.setDate(date.getDate() - date.getDay() + 1);
         const endOfWeek = new Date(startOfWeek);
-        endOfWeek.setDate(startOfWeek.getDate() + 6); // Kết thúc tuần (Chủ Nhật)
+        endOfWeek.setDate(startOfWeek.getDate() + 6);
         return { startOfWeek, endOfWeek };
     };
 
-    // Cập nhật ngày bắt đầu và kết thúc của tuần hiện tại
     const { startOfWeek, endOfWeek } = getWeekRange(currentDate);
 
-    // Lấy dữ liệu từ API khi component render hoặc khi tuần thay đổi
     useEffect(() => {
         const fetchRevenueData = async () => {
             try {
                 const response = await axios.get(apiUrl + "/thong-ke/thongke", {
                     params: { startOfWeek, endOfWeek }
                 });
-
-                // Giả sử API trả về object với cấu trúc { dailyRevenue: [array của doanh thu từng ngày trong tuần] }
                 const data = response.data;
-                // console.log("Received Data: ", data);
                 setWeeklyRevenueData(data.dailyRevenue || []);
                 setTotalRevenue(data.totalRevenue || 0);
-
             } catch (error) {
                 console.error("Error fetching revenue data:", error);
             }
@@ -70,19 +56,31 @@ const RevenueStatistics = () => {
         fetchRevenueData();
     }, [currentDate]);
 
-    // Hàm để lấy số tuần của một ngày cụ thể
+    const fetchTotalRevenueRange = async () => {
+        console.log('vào đ');
+
+        if (!startDate || !endDate) {
+            alert("Vui lòng chọn khoảng thời gian hợp lệ.");
+            return;
+        }
+
+        try {
+            const response = await axios.get(apiUrl + "/thong-ke/thongke_ktg", {
+                params: { startDate, endDate }
+            });
+            const data = response.data;
+            setTotalRevenueRange(data.totalRevenue || 0);
+        } catch (error) {
+            console.error("Error fetching total revenue for range:", error);
+        }
+    };
+
     const getWeekNumber = (date) => {
         const startDate = new Date(date.getFullYear(), 0, 1);
         const days = Math.floor((date - startDate) / (24 * 60 * 60 * 1000));
         return Math.ceil((days + 1) / 7);
     };
 
-    // // Nếu chưa có dữ liệu, hiển thị loading
-    // if (!weeklyRevenueData) {
-    //     return <div>Loading...</div>;
-    // }
-
-    // Dữ liệu biểu đồ
     const chartData = {
         labels: [
             startOfWeek.toLocaleDateString("vi-VN"),
@@ -124,32 +122,63 @@ const RevenueStatistics = () => {
         }
     };
 
-    // Hàm xử lý khi nhấn nút Back
     const handleBack = () => {
         const newDate = new Date(currentDate);
-        newDate.setDate(currentDate.getDate() - 7); // Lùi 1 tuần
+        newDate.setDate(currentDate.getDate() - 7);
         setCurrentDate(newDate);
     };
 
-    // Hàm xử lý khi nhấn nút Next
     const handleNext = () => {
         const newDate = new Date(currentDate);
-        newDate.setDate(currentDate.getDate() + 7); // Tiến 1 tuần
+        newDate.setDate(currentDate.getDate() + 7);
         setCurrentDate(newDate);
     };
-
 
     return (
         <div>
+            <div style={{ marginTop: '20px', textAlign: 'center',top:'0' }}>
+
+                <label>
+                    Từ ngày:
+                    <input
+                        type="date"
+                        value={startDate}
+                        onChange={(e) => setStartDate(e.target.value)}
+                        style={{ marginLeft: '10px', marginRight: '20px', width: '100px' }}
+                    />
+                </label>
+                <label>
+                    Đến ngày:
+                    <input
+                        type="date"
+                        value={endDate}
+                        onChange={(e) => setEndDate(e.target.value)}
+                        style={{ marginLeft: '10px', width: '100px' }}
+                    />
+                </label>
+                <button onClick={fetchTotalRevenueRange} style={{
+                    fontSize: '16px',
+                    cursor: 'pointer',
+                    background: 'green',
+                    color: 'white',
+                    border: 'none',
+                    marginLeft: '10px',
+                    borderRadius: '5px',
+                    padding: '5px 10px',
+                }}>Xem tổng doanh thu</button>
+                <h4 style={{ marginTop: '20px' }}>Tổng doanh thu từ {startDate} đến {endDate}: {totalRevenueRange ? totalRevenueRange.toLocaleString("vi-VN") : "0"} VND</h4>
+
+
+            </div>
             <h2 style={{ textAlign: 'center' }}>Thống kê doanh thu theo tuần</h2>
             <div style={{
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                marginBottom: '20px',
+                
             }}>
                 <button onClick={handleBack} style={{
-                    fontSize: '20px',
+                    fontSize: '10px',
                     cursor: 'pointer',
                     background: 'blue',
                     color: 'white',
@@ -172,8 +201,9 @@ const RevenueStatistics = () => {
             </div>
             <div>
                 <Bar data={chartData} options={chartOptions} />
-                <h4>Tổng doanh thu: {totalRevenue ? totalRevenue.toLocaleString("vi-VN") : "0"} VND</h4>
+                <h4>Tổng doanh thu theo tuần: {totalRevenue ? totalRevenue.toLocaleString("vi-VN") : "0"} VND</h4>
             </div>
+
         </div>
     );
 };
